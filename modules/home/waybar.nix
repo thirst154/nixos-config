@@ -87,14 +87,14 @@
       * {
   font-family: "Hack Nerd Font", "JetBrains Mono", monospace;
   font-size: 14px;
-  color: #d0cfcd;
+  color: #1b1c1d;
   margin: 0;
   padding: 0;
   border: none;
 }
 
 window#waybar {
-  background: #1b1c1d; /* semi-transparent */
+  background: #d0cfcd; /* semi-transparent */
   border-bottom: none;
   box-shadow: none;
   /* backdrop-filter: blur(10px); ❌ removed */

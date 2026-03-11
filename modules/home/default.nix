@@ -5,6 +5,7 @@
     ./waybar.nix
     ./nvim.nix
     ./wofi.nix
+    ./dunst.nix
   ];
 
   home.pointerCursor = {

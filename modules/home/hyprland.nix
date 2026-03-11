@@ -18,8 +18,7 @@
       exec-once = [
         "swaybg -i /home/thirst/nixos-config/assets/background.jpg -m fill"
         "waybar"
-        "dunst"
-        "hypridle"
+"hypridle"
       ];
 
       general = {
