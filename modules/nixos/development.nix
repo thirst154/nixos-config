@@ -1,23 +1,22 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-
     # --- Python ---
     python3
     python3Packages.pip
-    uv               # fast modern Python package manager
+    uv # fast modern Python package manager
 
     # --- JavaScript / TypeScript ---
     nodejs
     nodePackages.typescript
     nodePackages.typescript-language-server
-    bun              # optional fast runtime
+    bun # optional fast runtime
 
     # --- Rust ---
-    rustup           # manages toolchains (stable, nightly, targets)
+    rustup # manages toolchains (stable, nightly, targets)
 
     # --- Go ---
     go
-    gopls            # Go LSP
+    gopls # Go LSP
 
     # --- C / C++ ---
     gcc

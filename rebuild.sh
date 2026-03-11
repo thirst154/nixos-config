@@ -1,24 +1,32 @@
 #!/usr/bin/env bash
 set -e
+pushd ~/nixos-config/
 
-cd ~/nixos-config
+if git diff --quiet '*.nix'; then
+    echo "No changes detected, exiting."
+    popd
+    exit 0
+fi
 
-echo "=== Git Diff ==="
-git diff
+# Autoformat your nix files
+alejandra . &>/dev/null \
+  || ( alejandra . ; echo "formatting failed!"; exit 1)
 
-LOG=$(mktemp /tmp/nixos-rebuild-XXXXXX.log)
-echo "=== Building (log: $LOG) ==="
+# Shows your changes
+git diff -U0 '*.nix'
 
-sudo nixos-rebuild switch --flake ~/nixos-config#thinkpad 2>&1 | tee "$LOG"
+echo "NixOS Rebuilding..."
+sudo nixos-rebuild switch --flake ~/nixos-config#thinkpad &>nixos-switch.log || (
+    cat nixos-switch.log | grep --color error; exit 1)
 
-echo ""
-echo "=== Errors / Failures ==="
-grep --color=always -iE "error|false" "$LOG" || echo "(none found)"
+# Get current generation metadata
+current=$(nixos-rebuild list-generations | grep current)
 
-GENERATION=$(nixos-rebuild list-generations | grep current | awk '{print $1, $2, $3}')
-COMMIT_MSG="nixos rebuild: generation $GENERATION"
+# Commit all changes witih the generation metadata
+git commit -am "$current"
 
-echo ""
-echo "=== Committing: $COMMIT_MSG ==="
-git add -A
-git commit -m "$COMMIT_MSG"
+# Back to where you were
+popd
+
+# Notify all OK!
+notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available

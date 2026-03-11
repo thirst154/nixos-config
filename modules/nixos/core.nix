@@ -1,11 +1,11 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   nixpkgs.config.allowUnfree = true;
 
-  time.timeZone = "Europe/London";        # change to your TZ
+  time.timeZone = "Europe/London"; # change to your TZ
   i18n.defaultLocale = "en_GB.UTF-8";
 
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = ["nix-command" "flakes"];
     auto-optimise-store = true;
   };
 
@@ -23,6 +23,18 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    wget curl git ripgrep fd unzip btop fzf zoxide eza
+    wget
+    curl
+    git
+    ripgrep
+    fd
+    unzip
+    btop
+    fzf
+    zoxide
+    eza
+    fortune
+    cowsay
+    fastfetch
   ];
 }

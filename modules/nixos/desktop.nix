@@ -1,5 +1,4 @@
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   # Ly display manager
   services.displayManager.ly.enable = true;
 
@@ -12,7 +11,7 @@
   # Wayland / XDG portal (needed for screen share, file picker, etc.)
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
   };
 
   # Audio (Pipewire — standard for Wayland)
@@ -31,20 +30,21 @@
 
   environment.systemPackages = with pkgs; [
     bibata-cursors
-    kitty          # terminal
-    waybar         # status bar
-    nautilus       # file manager
-    swaybg         # wallpaper
-    hyprlock       # screen lock
-    hypridle       # idle daemon
-    dunst          # notifications
-    wofi           # app launcher
-    wl-clipboard   # clipboard
-    grim slurp     # screenshot tools
-    brightnessctl  # brightness
-    playerctl      # media keys
+    kitty # terminal
+    waybar # status bar
+    nautilus # file manager
+    swaybg # wallpaper
+    hyprlock # screen lock
+    hypridle # idle daemon
+    dunst # notifications
+    wofi # app launcher
+    wl-clipboard # clipboard
+    grim
+    slurp # screenshot tools
+    brightnessctl # brightness
+    playerctl # media keys
     networkmanagerapplet
-    pavucontrol    # audio GUI
+    pavucontrol # audio GUI
     gearlever
   ];
 }

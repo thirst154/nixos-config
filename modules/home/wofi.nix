@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   xdg.configFile."wofi/config".text = ''
     width=580
     height=400

@@ -1,9 +1,8 @@
-{ ... }: {
+{...}: {
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-
-      monitor = [ ",preferred,auto,1" ];    # auto-detect monitor
+      monitor = [",preferred,auto,1"]; # auto-detect monitor
 
       "$mod" = "SUPER";
       "$terminal" = "kitty";
@@ -18,7 +17,7 @@
       exec-once = [
         "swaybg -i /home/thirst/nixos-config/assets/background.jpg -m fill"
         "waybar"
-"hypridle"
+        "hypridle"
       ];
 
       general = {
@@ -86,7 +85,7 @@
       ];
 
       input = {
-        kb_layout = "gb";           # change to "us" etc.
+        kb_layout = "gb"; # change to "us" etc.
         follow_mouse = 1;
         sensitivity = 0.6;
         touchpad.natural_scroll = true;
