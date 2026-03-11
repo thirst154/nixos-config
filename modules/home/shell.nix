@@ -28,5 +28,10 @@
     };
   };
 
-  programs.fzf.enable = true;        # fuzzy finder, used by zsh plugin
+  programs.fzf.enable = true;    
+  programs.zoxide.enable = true;
+  programs.zoxide.enableZshIntegration = true;
+  programs.zoxide.options = [
+    "--cmd cd"
+  ];    # fuzzy finder, used by zsh plugin
 }

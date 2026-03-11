@@ -11,6 +11,7 @@
     gh               # GitHub CLI
     eza
     chromium
+    zed-editor
   ];
 
 }

@@ -23,6 +23,6 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    wget curl git ripgrep fd unzip
+    wget curl git ripgrep fd unzip btop fzf zoxide eza
   ];
 }
