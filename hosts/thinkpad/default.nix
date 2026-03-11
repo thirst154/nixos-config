@@ -9,6 +9,13 @@
 
   networking.hostName = "thinkpad";
 
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/sda";   # adjust if your VM disk is vda, nvme0n1, etc.
+  };
+
+  programs.zsh.enable = true;
+
   # Your user account
   users.users.thirst = {
     isNormalUser = true;

@@ -9,22 +9,7 @@
     vscode
     git
     gh               # GitHub CLI
+    eza
   ];
 
-  programs.fzf.enable = true;
-
-  programs.eza = {
-    enable = true;
-    enableZshIntegration = true;
-    icons = "auto";
-    git = true;
-    extraOptions = ["--group-directories-first", "--header"];
-  };
-
-  # zoxide — smarter cd (learns your most-used dirs)
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-    options = [ "--cmd cd" ];   # replaces `cd` directly; use `z` for fuzzy jump
-  };
 }

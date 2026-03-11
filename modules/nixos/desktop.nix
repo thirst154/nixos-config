@@ -40,7 +40,7 @@
     grim slurp     # screenshot tools
     brightnessctl  # brightness
     playerctl      # media keys
-    network-manager-applet
+    networkmanagerapplet
     pavucontrol    # audio GUI
   ];
 }
