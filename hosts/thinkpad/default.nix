@@ -11,7 +11,7 @@
 
   boot.loader.grub = {
     enable = true;
-    device = "/dev/sda";   # adjust if your VM disk is vda, nvme0n1, etc.
+    device = "/dev/nvme0n1";   # adjust if your VM disk is vda, nvme0n1, etc.
   };
 
   programs.zsh.enable = true;
