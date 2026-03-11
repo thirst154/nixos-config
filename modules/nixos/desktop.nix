@@ -34,7 +34,7 @@
     kitty          # terminal
     waybar         # status bar
     nautilus       # file manager
-    hyprpaper      # wallpaper
+    swaybg         # wallpaper
     hyprlock       # screen lock
     hypridle       # idle daemon
     dunst          # notifications

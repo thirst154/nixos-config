@@ -2,7 +2,6 @@
   imports = [
     ./shell.nix
     ./hyprland.nix
-    ./hyprpaper.nix
     ./waybar.nix
     ./nvim.nix
   ];
