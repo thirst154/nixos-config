@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix          # stays off git
     ../../modules/nixos/core.nix
