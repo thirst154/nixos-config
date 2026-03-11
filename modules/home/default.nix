@@ -4,6 +4,7 @@
     ./hyprland.nix
     ./waybar.nix
     ./nvim.nix
+    ./wofi.nix
   ];
 
   home.pointerCursor = {
