@@ -9,10 +9,9 @@
 
   networking.hostName = "thinkpad";
 
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/nvme0n1";   # adjust if your VM disk is vda, nvme0n1, etc.
-  };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
 
   programs.zsh.enable = true;
 

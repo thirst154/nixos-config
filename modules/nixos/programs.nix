@@ -10,6 +10,7 @@
     git
     gh               # GitHub CLI
     eza
+    Chromium
   ];
 
 }

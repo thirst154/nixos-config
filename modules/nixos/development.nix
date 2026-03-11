@@ -34,6 +34,9 @@
     jq
     htop
     tree
+
+    # -- AI --
+    claude-code
   ];
 
   # Docker daemon

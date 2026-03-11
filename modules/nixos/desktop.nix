@@ -27,6 +27,8 @@
   # Needed for Hyprland screen locking, polkit, etc.
   security.polkit.enable = true;
 
+  networking.networkmanager.enable = true;
+
   environment.systemPackages = with pkgs; [
     kitty          # terminal
     waybar         # status bar
@@ -42,5 +44,6 @@
     playerctl      # media keys
     networkmanagerapplet
     pavucontrol    # audio GUI
+    gearlever
   ];
 }

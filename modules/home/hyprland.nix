@@ -66,6 +66,7 @@
       input = {
         kb_layout = "gb";           # change to "us" etc.
         follow_mouse = 1;
+        sensitivity = 0.6;
         touchpad.natural_scroll = true;
       };
     };
