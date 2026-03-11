@@ -11,7 +11,7 @@
     gh               # GitHub CLI
   ];
 
-  programs.fzf.enable;
+  programs.fzf.enable = true;
 
   programs.eza = {
     enable = true;
