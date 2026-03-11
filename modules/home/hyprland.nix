@@ -10,7 +10,13 @@
       "$fileManager" = "nautilus";
       "$menu" = "wofi --show drun";
 
+      env = [
+        "XCURSOR_THEME,Bibata-Modern-Classic"
+        "XCURSOR_SIZE,24"
+      ];
+
       exec-once = [
+        "hyprpaper"
         "waybar"
         "dunst"
         "hypridle"
@@ -49,6 +55,7 @@
         "$mod, 3, workspace, 3"
         "$mod, 4, workspace, 4"
         "$mod, 5, workspace, 5"
+        "$mod, M, exit"
 
         "$mod SHIFT, 1, movetoworkspace, 1"
         "$mod SHIFT, 2, movetoworkspace, 2"

@@ -30,6 +30,7 @@
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
+    bibata-cursors
     kitty          # terminal
     waybar         # status bar
     nautilus       # file manager
