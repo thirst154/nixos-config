@@ -10,8 +10,8 @@
         highlight = "#89b4fa";
 
         width = 340;
-        height = 200;
-        offset = "12x48";
+        height = "(0, 200)";
+        offset = "(12, 48)";
         origin = "top-right";
         notification_limit = 5;
 
