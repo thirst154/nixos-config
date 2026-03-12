@@ -3,7 +3,6 @@
     ./shell.nix
     ./hyprland.nix
     ./waybar.nix
-    ./nvim.nix
     ./wofi.nix
     ./dunst.nix
   ];

@@ -1,9 +1,18 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   programs.firefox.enable = true;
 
   # Nautilus needs GIO for trash, network mounts, etc.
   services.gvfs.enable = true;
   services.tumbler.enable = true; # thumbnail service
+
+  programs.neovim = {
+    enable = true;
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+  };
 
   environment.systemPackages = with pkgs; [
     vscode

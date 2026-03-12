@@ -36,5 +36,6 @@
     fortune
     cowsay
     fastfetch
+    vim
   ];
 }
