@@ -1,20 +1,11 @@
 {pkgs, ...}: {
-  # Ly display manager
-  services.displayManager.ly.enable = true;
+  programs.hyprland.enable = true;
 
-  # Hyprland
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
-  # Wayland / XDG portal (needed for screen share, file picker, etc.)
   xdg.portal = {
     enable = true;
     extraPortals = [pkgs.xdg-desktop-portal-hyprland];
   };
 
-  # Audio (Pipewire — standard for Wayland)
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -23,28 +14,39 @@
     pulse.enable = true;
   };
 
-  # Needed for Hyprland screen locking, polkit, etc.
   security.polkit.enable = true;
 
   networking.networkmanager.enable = true;
 
+  services.displayManager.ly.enable = true;
+
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
+
+  programs.firefox.enable = true;
+
   environment.systemPackages = with pkgs; [
-    bibata-cursors
-    kitty # terminal
-    waybar # status bar
-    nautilus # file manager
-    swaybg # wallpaper
-    hyprlock # screen lock
-    hypridle # idle daemon
-    dunst # notifications
-    wofi # app launcher
-    wl-clipboard # clipboard
+    # WM / Desktop
+    swww
+    waybar
+    hyprlock
+    hypridle
+    mako
+    ghostty
+    kitty
+
+    # System utilities
+    wl-clipboard
     grim
-    slurp # screenshot tools
-    brightnessctl # brightness
-    playerctl # media keys
+    slurp
+    playerctl
+    brightnessctl
+    pavucontrol
     networkmanagerapplet
-    pavucontrol # audio GUI
-    gearlever
+
+    # Apps
+    nautilus
+    bibata-cursors
+    papirus-icon-theme
   ];
 }

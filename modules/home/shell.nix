@@ -6,37 +6,50 @@
 
     oh-my-zsh = {
       enable = true;
-      theme = "robbyrussell"; # swap to your preference
+      theme = "lambda";
       plugins = [
         "git"
-        "docker"
-        "rust"
-        "node"
-        "python"
-        "golang"
-        "z"
-        "fzf"
+        "zsh-autosuggestions"
+        "zsh-syntax-highlighting"
       ];
     };
 
-    shellAliases = {
-      # replace the old ll alias with eza variants
-      ls = "eza";
-      ll = "eza -lah";
-      lt = "eza --tree --level=2";
-      la = "eza -a";
+    initExtra = ''
+      # fastfetch on terminal start
+      fastfetch
 
-      gs = "git status";
-      gc = "git commit";
-      lg = "lazygit";
-      rebuild = "~/nixos-config/rebuild.sh";
+      # zoxide
+      eval "$(zoxide init zsh --cmd cd)"
+
+      # pnpm
+      export PNPM_HOME="$HOME/.local/share/pnpm"
+      case ":$PATH:" in
+        *":$PNPM_HOME:"*) ;;
+        *) export PATH="$PNPM_HOME:$PATH" ;;
+      esac
+    '';
+
+    sessionVariables = {
+      NVM_DIR = "$HOME/.nvm";
+    };
+
+    shellAliases = {
+      ls = "eza --icons";
+      ll = "eza -l --header --icons";
+      la = "eza -la --header --icons";
+      vi = "nvim";
+      vim = "nvim";
     };
   };
 
   programs.fzf.enable = true;
   programs.zoxide.enable = true;
   programs.zoxide.enableZshIntegration = true;
-  programs.zoxide.options = [
-    "--cmd cd"
-  ]; # fuzzy finder, used by zsh plugin
+  programs.zoxide.options = ["--cmd cd"];
+
+  home.sessionPath = [
+    "$HOME/.opencode/bin"
+    "$HOME/.local/bin"
+    "/usr/local/go/bin"
+  ];
 }

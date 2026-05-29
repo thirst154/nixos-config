@@ -1,5 +1,5 @@
 {
-  description = "Tom's Nixos Configuration";
+  description = "Tom's NixOS Configuration — based on actual dotfiles";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -9,19 +9,24 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
+
     alejandra = {
       url = "github:kamadorueda/alejandra/4.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Neovim nightly
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    hyprland,
+    ghostty,
     alejandra,
     ...
   } @ inputs: let
@@ -29,18 +34,21 @@
     pkgs = nixpkgs.legacyPackages.${system};
   in {
     nixosConfigurations = {
-      # Add more hosts here later — just duplicate this block
       thinkpad = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {inherit inputs;};
         modules = [
+          hyprland.nixosModules.default
           ./hosts/thinkpad/default.nix
           home-manager.nixosModules.home-manager
-          {environment.systemPackages = [alejandra.defaultPackage.${system}];}
+          {
+            environment.systemPackages = [alejandra.defaultPackage.${system}];
+          }
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.thirst = import ./modules/home/default.nix;
+            home-manager.extraSpecialArgs = {inherit inputs;};
           }
         ];
       };

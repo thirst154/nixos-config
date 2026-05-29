@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   programs.waybar = {
     enable = true;
 
@@ -6,116 +6,138 @@
       {
         layer = "top";
         position = "top";
-        height = 36;
-        spacing = 4;
+        height = 32;
+        spacing = 0;
 
         modules-left = ["hyprland/workspaces"];
         modules-center = ["clock"];
-        modules-right = [
-          "hyprland/window"
-          "backlight"
-          "pulseaudio"
-          "network"
-          "battery"
-          "tray"
-        ];
+        modules-right = ["battery" "pulseaudio" "backlight" "memory" "cpu"];
 
-        # ── Left ────────────────────────────────────────────────────────────
         "hyprland/workspaces" = {
-          format = "{id}";
-          on-click = "activate";
-          sort-by-number = true;
-        };
-
-        # ── Center ──────────────────────────────────────────────────────────
-        clock = {
-          format = "  {:%a %d %b   %H:%M}";
-          tooltip-format = "{calendar}";
-        };
-
-        # ── Right ────────────────────────────────────────────────────────────
-        "hyprland/window" = {
-          format = "{class}";
-          separate-outputs = false;
-          rewrite = {
-            "(.*)" = "  $1";
+          disable-scroll = true;
+          all-outputs = true;
+          persistent-workspaces = {
+            "eDP-1" = [1 2 3 4 5];
           };
+          format = "{icon}";
+          format-icons = {
+            "1" = "●";
+            "2" = "●";
+            "3" = "●";
+            "4" = "●";
+            "5" = "●";
+            "urgent" = "●";
+            "active" = "●";
+            "default" = "○";
+          };
+          on-click = "activate";
         };
 
-        backlight = {
-          format = "{icon} {percent}%";
-          format-icons = ["" "" "" "" "" "" "" "" ""];
-          on-scroll-up = "brightnessctl set +5%";
-          on-scroll-down = "brightnessctl set 5%-";
-        };
-
-        pulseaudio = {
-          format = "{icon} {volume}%";
-          format-muted = "󰝟 Muted";
-          format-icons = {default = ["" "" "󰕾"];};
-          on-click = "pavucontrol";
-          on-scroll-up = "pactl set-sink-volume @DEFAULT_SINK@ +5%";
-          on-scroll-down = "pactl set-sink-volume @DEFAULT_SINK@ -5%";
-        };
-
-        network = {
-          format-wifi = "󰤨 {essid}";
-          format-ethernet = "󰈀 {ifname}";
-          format-disconnected = "󰤭 Offline";
-          tooltip-format-wifi = "{signalStrength}% — {frequency} GHz";
-          on-click = "nm-connection-editor";
+        clock = {
+          interval = 60;
+          format = "{:%H:%M}";
+          tooltip-format = "{:%A, %B %d, %Y}";
         };
 
         battery = {
-          format = "{icon} {capacity}%";
-          format-charging = "󰂄 {capacity}%";
-          format-plugged = "󰚥 {capacity}%";
-          format-icons = ["󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
           states = {
-            warning = 20;
-            critical = 10;
+            warning = 30;
+            critical = 15;
           };
+          format = "{capacity}% {icon}";
+          format-charging = "{capacity}% ";
+          format-plugged = "{capacity}% ";
+          format-icons = ["" "" "" "" ""];
         };
 
-        tray = {
-          icon-size = 16;
-          spacing = 8;
-          show-passive-items = true;
+        pulseaudio = {
+          format = "{volume}% {icon}";
+          format-muted = " M";
+          format-icons = {
+            default = ["" ""];
+          };
+          on-click = "pavucontrol";
+        };
+
+        backlight = {
+          format = "{percent}% ";
+        };
+
+        memory = {
+          format = "{}% ";
+          interval = 5;
+        };
+
+        cpu = {
+          format = "{usage}% ";
+          interval = 5;
         };
       }
     ];
 
     style = ''
-            * {
-        font-family: "Hack Nerd Font", "JetBrains Mono", monospace;
-        font-size: 14px;
-        color: #1b1c1d;
-        margin: 0;
-        padding: 0;
-        border: none;
+      * {
+          font-family: JetBrainsMonoNL Nerd Font, sans-serif;
+          font-size: 13px;
+          min-height: 0;
       }
 
       window#waybar {
-        background: #d0cfcd; /* semi-transparent */
-        border-bottom: none;
-        box-shadow: none;
-        /* backdrop-filter: blur(10px); ❌ removed */
-        transition: none;
-        font-weight: bold;
+          background-color: rgba(30, 30, 30, 0.95);
+          color: #ffffff;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
 
-      #clock,
+      #workspaces button {
+          padding: 0 6px;
+          background: transparent;
+          color: #5a5a5a;
+          border: none;
+          box-shadow: none;
+          text-shadow: none;
+          font-size: 10px;
+      }
+
+      #workspaces button.active {
+          color: #ffffff;
+      }
+
+      #workspaces button.urgent {
+          color: #f53c3c;
+      }
+
+      #clock {
+          font-weight: bold;
+          padding: 0 12px;
+      }
+
       #battery,
-      #custom-dot,
-      #custom-gpu,
-      #network,
       #pulseaudio,
-      #tray {
-        padding: 0 10px;
+      #backlight,
+      #memory,
+      #cpu {
+          padding: 0 10px;
       }
 
-      #tray > .tray-item {
-        margin: 0 4px;
+      #battery.charging,
+      #battery.plugged {
+          color: #2ecc71;
+      }
+
+      #battery.critical:not(.charging) {
+          color: #f53c3c;
+          animation-name: blink;
+          animation-duration: 0.5s;
+          animation-timing-function: steps(12);
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+      }
+
+      @keyframes blink {
+          to {
+              color: #000000;
+              background-color: #f53c3c;
+          }
       }
     '';
   };

@@ -1,26 +1,18 @@
-{pkgs, ...}: {
+{pkgs, inputs, ...}: {
   imports = [
     ./shell.nix
     ./hyprland.nix
     ./waybar.nix
-    ./wofi.nix
-    ./dunst.nix
+    ./mako.nix
+    ./hyprlock.nix
+    ./ghostty.nix
+    ./kitty.nix
+    ./nvim.nix
+    ./fastfetch.nix
+    ./scripts.nix
+    ./gtk.nix
+    ./git.nix
   ];
-
-  home.pointerCursor = {
-    gtk.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
-    size = 24;
-  };
-
-  gtk = {
-    enable = true;
-    iconTheme = {
-      package = pkgs.papirus-icon-theme;
-      name = "Papirus-Dark";
-    };
-  };
 
   home.stateVersion = "24.11";
 }

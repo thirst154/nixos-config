@@ -1,13 +1,12 @@
-{...}: {
+{pkgs, ...}: {
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      monitor = [",preferred,auto,1"]; # auto-detect monitor
+      monitor = [",preferred,auto,1"];
 
-      "$mod" = "SUPER";
-      "$terminal" = "kitty";
+      "$mainMod" = "SUPER";
+      "$terminal" = "ghostty";
       "$fileManager" = "nautilus";
-      "$menu" = "wofi --show drun";
 
       env = [
         "XCURSOR_THEME,Bibata-Modern-Classic"
@@ -15,81 +14,105 @@
       ];
 
       exec-once = [
-        "swaybg -i /home/thirst/nixos-config/assets/background.jpg -m fill"
-        "waybar"
-        "hypridle"
+        "awww-daemon & awww img /home/thirst/Pictures/Wallpaper/Wallpaper1.jpeg"
+        "waybar & hypridle & mako"
       ];
-
-      general = {
-        gaps_in = 5;
-        gaps_out = 10;
-        border_size = 2;
-        layout = "dwindle";
-      };
-
-      decoration = {
-        rounding = 8;
-        blur.enabled = true;
-      };
 
       bind = [
-        "$mod, Return, exec, $terminal"
-        "$mod, E, exec, $fileManager"
-        "$mod, Space, exec, $menu"
-        "$mod, C, killactive"
-        "$mod, F, fullscreen"
-        "$mod, V, togglefloating"
-        "$mod SHIFT, E, exit"
+        "$mainMod, Space, exec, vicinae toggle"
+        "$mainMod, Return, exec, $terminal"
+        "$mainMod, C, killactive,"
+        "$mainMod, M, exec, hyprctl dispatch exit"
+        "$mainMod, E, exec, $fileManager"
+        "$mainMod, V, togglefloating,"
+        "$mainMod, B, exec, toggle-waybar"
+        "$mainMod, F, fullscreen,"
 
         # Focus
-        "$mod, H, movefocus, l"
-        "$mod, L, movefocus, r"
-        "$mod, K, movefocus, u"
-        "$mod, J, movefocus, d"
+        "$mainMod, left, movefocus, l"
+        "$mainMod, right, movefocus, r"
+        "$mainMod, up, movefocus, u"
+        "$mainMod, down, movefocus, d"
+
+        # Move windows
+        "$mainMod SHIFT, left, movewindow, l"
+        "$mainMod SHIFT, right, movewindow, r"
+        "$mainMod SHIFT, up, movewindow, u"
+        "$mainMod SHIFT, down, movewindow, d"
+
+        # Resize
+        "$mainMod CTRL, left, resizeactive, -30 0"
+        "$mainMod CTRL, right, resizeactive, 30 0"
+        "$mainMod CTRL, up, resizeactive, 0 -30"
+        "$mainMod CTRL, down, resizeactive, 0 30"
 
         # Workspaces
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-        "$mod, M, exit"
+        "$mainMod, 1, workspace, 1"
+        "$mainMod, 2, workspace, 2"
+        "$mainMod, 3, workspace, 3"
+        "$mainMod, 4, workspace, 4"
+        "$mainMod, 5, workspace, 5"
+        "$mainMod, 6, workspace, 6"
+        "$mainMod, 7, workspace, 7"
+        "$mainMod, 8, workspace, 8"
+        "$mainMod, 9, workspace, 9"
+        "$mainMod, 0, workspace, 10"
 
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-
-        # Screenshot
-        ", Print, exec, grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%s).png"
-      ];
-
-      # Volume / brightness / media keys (repeatable while held)
-      bindel = [
-        ", XF86AudioRaiseVolume,  exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
-        ", XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        ", XF86MonBrightnessUp,   exec, brightnessctl set +5%"
-        ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
+        "$mainMod SHIFT, 1, movetoworkspace, 1"
+        "$mainMod SHIFT, 2, movetoworkspace, 2"
+        "$mainMod SHIFT, 3, movetoworkspace, 3"
+        "$mainMod SHIFT, 4, movetoworkspace, 4"
+        "$mainMod SHIFT, 5, movetoworkspace, 5"
+        "$mainMod SHIFT, 6, movetoworkspace, 6"
+        "$mainMod SHIFT, 7, movetoworkspace, 7"
+        "$mainMod SHIFT, 8, movetoworkspace, 8"
+        "$mainMod SHIFT, 9, movetoworkspace, 9"
+        "$mainMod SHIFT, 0, movetoworkspace, 10"
       ];
 
       bindl = [
-        ", XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ", XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ", XF86AudioPlay,         exec, playerctl play-pause"
-        ", XF86AudioNext,         exec, playerctl next"
-        ", XF86AudioPrev,         exec, playerctl previous"
+        ", switch:Lid Switch, exec, hyprlock"
+        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+        ", XF86AudioPlay, exec, playerctl play-pause"
+        ", XF86AudioPrev, exec, playerctl previous"
+        ", XF86AudioNext, exec, playerctl next"
+      ];
+
+      bindel = [
+        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ", XF86MonBrightnessDown, exec, brightness-down"
+        ", XF86MonBrightnessUp, exec, brightness-up"
       ];
 
       bindm = [
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindow"
+        "$mainMod, mouse:272, movewindow"
+        "$mainMod, mouse:273, resizewindow"
       ];
 
       input = {
-        kb_layout = "gb"; # change to "us" etc.
+        kb_layout = "gb";
         follow_mouse = 1;
-        sensitivity = 0.6;
-        touchpad.natural_scroll = true;
+        sensitivity = 0;
+        touchpad = {
+          natural_scroll = true;
+          clickfinger_behavior = 1;
+        };
       };
+
+      general = {
+        gaps_in = 2;
+        gaps_out = 2;
+        border_size = 1;
+        resize_on_border = true;
+      };
+
+      layerrule = [
+        "blur, namespace:vicinae"
+        "ignorealpha 0, namespace:vicinae"
+        "noanim, namespace:vicinae"
+      ];
     };
   };
 }

@@ -1,23 +1,15 @@
 {
   pkgs,
-  inputs,
   ...
 }: {
-  programs.firefox.enable = true;
-
-  # Nautilus needs GIO for trash, network mounts, etc.
-  services.gvfs.enable = true;
-  services.tumbler.enable = true; # thumbnail service
-
   programs.neovim = {
     enable = true;
-    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+    defaultEditor = true;
   };
 
   environment.systemPackages = with pkgs; [
     vscode
-    git
-    gh # GitHub CLI
+    gh
     eza
     chromium
     zed-editor
