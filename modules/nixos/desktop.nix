@@ -3,7 +3,7 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-hyprland];
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
 
   security.rtkit.enable = true;
@@ -18,12 +18,10 @@
 
   networking.networkmanager.enable = true;
 
-  services.displayManager.ly.enable = true;
+  services.displayManager.gdm.enable = true;
 
   services.gvfs.enable = true;
   services.tumbler.enable = true;
-
-  programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
     # WM / Desktop
@@ -34,6 +32,7 @@
     mako
     ghostty
     kitty
+    wofi
 
     # System utilities
     wl-clipboard
@@ -48,5 +47,6 @@
     nautilus
     bibata-cursors
     papirus-icon-theme
+    localsend
   ];
 }

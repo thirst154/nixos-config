@@ -14,18 +14,19 @@
       ];
 
       exec-once = [
-        "awww-daemon & awww img /home/thirst/Pictures/Wallpaper/Wallpaper1.jpeg"
+        "swww-daemon"
+        "sleep 2 && swww img /home/thirst/nixos-config/assets/Wallpaper1.jpeg"
         "waybar & hypridle & mako"
+        "opencode web"
       ];
 
       bind = [
-        "$mainMod, Space, exec, vicinae toggle"
+        "$mainMod, Space, exec, walker"
         "$mainMod, Return, exec, $terminal"
         "$mainMod, C, killactive,"
         "$mainMod, M, exec, hyprctl dispatch exit"
         "$mainMod, E, exec, $fileManager"
         "$mainMod, V, togglefloating,"
-        "$mainMod, B, exec, toggle-waybar"
         "$mainMod, F, fullscreen,"
 
         # Focus
@@ -108,11 +109,7 @@
         resize_on_border = true;
       };
 
-      layerrule = [
-        "blur, namespace:vicinae"
-        "ignorealpha 0, namespace:vicinae"
-        "noanim, namespace:vicinae"
-      ];
+      # layerrule removed - syntax changed in recent hyprland
     };
   };
 }

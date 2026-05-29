@@ -16,10 +16,6 @@
       package = pkgs.papirus-icon-theme;
       name = "WhiteSur";
     };
-    theme = {
-      package = pkgs.adwaita-theme;
-      name = "Adwaita";
-    };
     gtk3.extraConfig = {
       gtk-hint-font-metrics = 1;
       gtk-enable-animations = true;

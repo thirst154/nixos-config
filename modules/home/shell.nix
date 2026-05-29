@@ -7,14 +7,10 @@
     oh-my-zsh = {
       enable = true;
       theme = "lambda";
-      plugins = [
-        "git"
-        "zsh-autosuggestions"
-        "zsh-syntax-highlighting"
-      ];
+      plugins = ["git"];
     };
 
-    initExtra = ''
+    initContent = ''
       # fastfetch on terminal start
       fastfetch
 

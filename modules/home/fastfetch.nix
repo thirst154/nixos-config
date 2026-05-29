@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   xdg.configFile."fastfetch/config.jsonc".text = ''
     {
       "logo": {

@@ -1,12 +1,8 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   xdg.configFile."hypr/hyprlock.conf".text = ''
     background {
         monitor =
-        path = /home/thirst/Pictures/Wallpaper/Wallpaper1.jpeg
-        blur_passes = 2
+        path = /home/thirst/nixos-config/assets/Wallpaper1.jpeg
     }
 
     general {

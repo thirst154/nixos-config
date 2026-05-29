@@ -19,6 +19,21 @@
       url = "github:kamadorueda/alejandra/4.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    helium = {
+      url = "github:schembriaiden/helium-browser-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    elephant = {
+      url = "github:abenz1267/elephant";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -28,6 +43,9 @@
     hyprland,
     ghostty,
     alejandra,
+    helium,
+    walker,
+    elephant,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -42,7 +60,7 @@
           ./hosts/thinkpad/default.nix
           home-manager.nixosModules.home-manager
           {
-            environment.systemPackages = [alejandra.defaultPackage.${system}];
+            environment.systemPackages = [alejandra.packages.${system}.default];
           }
           {
             home-manager.useGlobalPkgs = true;

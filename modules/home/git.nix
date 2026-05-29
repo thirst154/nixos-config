@@ -1,18 +1,8 @@
 {pkgs, ...}: {
   programs.git = {
     enable = true;
-    userName = "Thomas Hirst";
-    userEmail = "thomashirst@pm.me";
-    extraConfig = {
-      credential = {
-        "https://github.com" = {
-          helper = "!/usr/bin/gh auth git-credential";
-        };
-        "https://gist.github.com" = {
-          helper = "!/usr/bin/gh auth git-credential";
-        };
-      };
-    };
+    settings.user.name = "Thomas Hirst";
+    settings.user.email = "thomashirst@pm.me";
   };
 
   programs.gh = {
