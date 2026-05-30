@@ -2,6 +2,8 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
+  programs.hyprland.enable = true;
+
   services.libinput.enable = true;
 
   services.pipewire = {
@@ -23,6 +25,13 @@
     xdg-utils
     pavucontrol
     networkmanagerapplet
+    # Firefox
+
+    # Hyprland
+    kitty
+    waybar
+    mako
+    wofi
   ];
 
   xdg.portal.enable = true;

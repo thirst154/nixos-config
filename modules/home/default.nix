@@ -4,6 +4,9 @@
     ./ghostty.nix
     ./git.nix
     ./gtk.nix
+    ./hyprland.nix
+    ./mako.nix
+    ./waybar.nix
   ];
 
   home.pointerCursor = {

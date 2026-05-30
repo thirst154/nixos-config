@@ -1,0 +1,34 @@
+warning: Git tree '/home/thirst/nixos-config' is dirty
+building the system configuration...
+warning: Git tree '/home/thirst/nixos-config' is dirty
+error:
+       … while calling the 'head' builtin
+         at «github:nixos/nixpkgs/64c08a7ca051951c8eae34e3e3cb1e202fe36786?narHash=sha256-tpyBcxPpcQb8ukyNF7DoCwfSY3VPsxHoYwj00Cayv5o%3D»/lib/attrsets.nix:1712:13:
+         1711|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1712|             head values
+             |             ^
+         1713|           else
+
+       … while evaluating the attribute 'value'
+         at «github:nixos/nixpkgs/64c08a7ca051951c8eae34e3e3cb1e202fe36786?narHash=sha256-tpyBcxPpcQb8ukyNF7DoCwfSY3VPsxHoYwj00Cayv5o%3D»/lib/modules.nix:1167:7:
+         1166|     // {
+         1167|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1168|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `/nix/store/81sr43harc753claf8bzyv3mrnjzq652-source/nixos/modules/system/activation/top-level.nix':
+
+       … while evaluating the option `assertions':
+
+       … while evaluating definitions from `/nix/store/yjs7i1p0ww3p1d91b5jlxvz1p6jswl0m-source/nixos/common.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: Path 'modules/home/hyprland.nix' in the repository "/home/thirst/nixos-config" is not tracked by Git.
+
+       To make it visible to Nix, run:
+
+       git -C "/home/thirst/nixos-config" add "modules/home/hyprland.nix"
+Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '/home/thirst/nixos-config#nixosConfigurations."thinkpad".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
