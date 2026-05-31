@@ -17,6 +17,9 @@
 
   hardware.enableRedistributableFirmware = true;
 
+  boot.initrd.kernelModules = ["i915"];
+  boot.kernelModules = ["i915"];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;

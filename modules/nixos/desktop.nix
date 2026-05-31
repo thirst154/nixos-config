@@ -1,6 +1,8 @@
 {pkgs, ...}: {
   services.xserver.enable = true;
+  services.xserver.videoDrivers = ["modesetting"];
   services.displayManager.gdm.enable = true;
+  services.displayManager.defaultSession = "hyprland";
   #services.desktopManager.gnome.enable = true;
 
   programs.hyprland.enable = true;
