@@ -20,7 +20,7 @@ sudo nixos-rebuild switch --flake ~/nixos-config#thinkpad &>nixos-switch.log || 
     cat nixos-switch.log | grep -iE --color 'error|warning'; exit 1)
 
 # Get current generation ID
-gen=$(nixos-rebuild list-generations | grep current | awk '{print $1}')
+gen=$(sudo nixos-rebuild list-generations | grep current | awk '{print $1}')
 
 # Stage and commit with generation ID
 git add '*.nix' flake.lock
@@ -30,4 +30,4 @@ git commit -m "Generation $gen"
 popd
 
 # Notify all OK!
-notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available
+notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available 2>/dev/null || true

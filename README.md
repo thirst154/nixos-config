@@ -1,13 +1,14 @@
 # nixos-config
 
-NixOS flake for **thinkpad** — a ThinkPad laptop running NixOS unstable with a dual-desktop setup (GNOME + Hyprland) managed via Home Manager.
+NixOS flake for **thinkpad** — a ThinkPad laptop running NixOS unstable with Hyprland (Wayland compositor) managed via Home Manager.
 
 ## Features
 
-- **Dual desktop environment**: GNOME (via GDM) and Hyprland (Wayland compositor)
+- **Hyprland desktop environment**: Wayland compositor with GDM display manager
 - **UK keyboard layout** everywhere: console, X11/GDM, and Hyprland
 - **ThinkPad-specific tweaks**: TLP for power management, Bluetooth with blueman, libinput touchpad
-- **Development-ready**: Python, Node.js, Rust, Go, C/C++, Docker, and language servers
+- **Gaming ready**: Steam, GameMode, MangoHud, Gamescope, Lutris, Winetricks, ATLauncher
+- **Development-ready**: Python, Node.js, Rust, Go, C/C++, and language servers
 - **Custom apps from flakes**: Ghostty terminal and Helium browser
 - **Pretty shell**: Zsh with Oh My Zsh (lambda theme), autosuggestions, syntax highlighting, fzf, zoxide, and direnv
 - **Nix hygiene**: Weekly GC, nightly store optimisation, 10-generation boot limit, trusted-user permissions
@@ -22,9 +23,10 @@ hosts/thinkpad/
 modules/
   nixos/               # system-wide modules
     core.nix             # nix settings, locale, fonts, trusted-users, base packages
-    desktop.nix          # GDM + GNOME, Hyprland, pipewire, portals, keyring
-    development.nix      # languages & tooling (python, node, rust, go, docker)
+    desktop.nix          # GDM, Hyprland, pipewire, portals, keyring
+    development.nix      # languages & tooling (python, node, rust, go)
     programs.nix         # editors, terminal, media, AI tools
+    gaming.nix           # steam, gamemode, graphics, game tools
   home/                # home-manager user modules
     default.nix          # imports + cursor/gtk theme settings
     shell.nix            # zsh, oh-my-zsh, fzf, zoxide, direnv, aliases
@@ -32,10 +34,15 @@ modules/
     git.nix              # git user config
     gtk.nix              # GTK font & extraConfig
     hyprland.nix         # Hyprland window manager config + keybinds
+    hyprlock.nix         # Hyprland screen lock config
     waybar.nix           # Waybar status bar (workspaces, battery, audio, etc.)
     mako.nix             # Mako notification daemon
     wofi.nix             # Wofi launcher config & theme
+    vicinae.nix          # Vicinae clipboard manager service
+    nvim.nix             # Neovim config
 rebuild.sh             # helper script: format, diff, rebuild, commit, notify
+update.sh              # helper script: update flake inputs and show lock diff
+clean.sh               # helper script: remove local artifacts and run nix GC
 ```
 
 ## Flake Inputs
@@ -47,7 +54,6 @@ rebuild.sh             # helper script: format, diff, rebuild, commit, notify
 | `ghostty` | GPU-accelerated terminal emulator |
 | `alejandra` | Nix formatter |
 | `helium` | Custom web browser |
-| `ghostty` | GPU-accelerated terminal emulator |
 
 ## Usage
 
@@ -77,12 +83,24 @@ This will:
 5. Commit the changes with generation metadata
 6. Send a desktop notification on success
 
+### Update flake inputs
+
+```sh
+./update.sh
+```
+
+### Clean up local artifacts and Nix store
+
+```sh
+./clean.sh
+```
+
 ## Keybinds (Hyprland)
 
 | Key | Action |
 |-----|--------|
 | `Super + Enter` | Open Ghostty terminal |
-| `Super + Space` | Toggle Vicinae launcher |
+| `Super + Space` | Open Wofi launcher |
 | `Super + E` | Open file manager (Nautilus) |
 | `Super + C` | Close active window |
 | `Super + M` | Exit Hyprland |
@@ -101,6 +119,6 @@ This will:
 - **State versions**: NixOS `24.11`, Home Manager `26.05`
 - **Home Manager**: Uses global pkgs and user packages, with `.hm-backup` file extension for collisions
 - **Vicinae cachix**: Binary cache configured for faster builds
-- **Docker**: User is in the `docker` group; Docker daemon is enabled system-wide
+- **Docker tools**: Docker and docker-compose installed; user is in the `docker` group
 - **GPG Agent**: Enabled for signing and key management
 - **GNOME Keyring**: Enabled for secret storage
