@@ -21,6 +21,15 @@
     pkg-config
     gdb
 
+    # Ebitengine dependencies (graphics & audio libraries)
+    mesa
+    libXcursor
+    libXi
+    libXinerama
+    libXrandr
+    libXxf86vm
+    alsa-lib
+
     docker
     docker-compose
     lazygit
