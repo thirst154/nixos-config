@@ -1,9 +1,13 @@
 {pkgs, ...}: {
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = ["modesetting"];
-  services.displayManager.gdm.enable = true;
-  services.displayManager.defaultSession = "hyprland";
-  #services.desktopManager.gnome.enable = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        user = "greeter";
+      };
+    };
+  };
 
   programs.hyprland.enable = true;
 
