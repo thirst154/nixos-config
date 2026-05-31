@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        command = "${pkgs.cage}/bin/cage -s -- ${pkgs.regreet}/bin/regreet";
         user = "greeter";
       };
     };
@@ -41,6 +41,10 @@
     mako
     swaybg
     brightnessctl
+
+    # Greeter theming
+    papirus-icon-theme
+    bibata-cursors
   ];
 
   xdg.portal.enable = true;
@@ -55,4 +59,15 @@
   };
 
   services.gnome.gnome-keyring.enable = true;
+
+  environment.etc."greetd/regreet.toml".text = ''
+    [background]
+    path = "${./../../assets/Wallpaper.jpeg}"
+    fit = "Cover"
+
+    [GTK]
+    application_prefer_dark_theme = true
+    icon_theme_name = "Papirus-Dark"
+    cursor_theme_name = "Bibata-Modern-Classic"
+  '';
 }
