@@ -12,12 +12,15 @@
     zed-editor
 
     localsend
-
+    transmission_4-gtk
     haruna
     ffmpeg
 
     # AI
     opencode
+
+    # Gaming
+    atlauncher
   ];
 
   environment.variables.EDITOR = "nvim";
