@@ -18,9 +18,6 @@
 
     # AI
     opencode
-
-    # Gaming
-    atlauncher
   ];
 
   environment.variables.EDITOR = "nvim";

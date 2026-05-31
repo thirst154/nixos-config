@@ -9,6 +9,7 @@
     ../../modules/nixos/desktop.nix
     ../../modules/nixos/development.nix
     ../../modules/nixos/programs.nix
+    ../../modules/nixos/gaming.nix
   ];
 
   networking.hostName = "thinkpad";
