@@ -12,11 +12,23 @@
   ];
 
   networking.hostName = "thinkpad";
+  networking.networkmanager.enable = true;
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  console.keyMap = "uk";
+  services.xserver.xkb.layout = "gb";
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
+  services.tlp.enable = true;
+  services.power-profiles-daemon.enable = false;
+
   programs.zsh.enable = true;
+  programs.gnupg.agent.enable = true;
 
   users.users.thirst = {
     isNormalUser = true;

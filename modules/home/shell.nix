@@ -14,13 +14,10 @@
       # fastfetch on terminal start
       fastfetch
 
-      # zoxide
-      eval "$(zoxide init zsh --cmd cd)"
-
       # pnpm
       export PNPM_HOME="$HOME/.local/share/pnpm"
       case ":$PATH:" in
-        *":$PNPM_HOME:"*) ;;
+        *":$PNPM_HOME:") ;;
         *) export PATH="$PNPM_HOME:$PATH" ;;
       esac
     '';
@@ -42,6 +39,9 @@
   programs.zoxide.enable = true;
   programs.zoxide.enableZshIntegration = true;
   programs.zoxide.options = ["--cmd cd"];
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   home.sessionPath = [
     "$HOME/.opencode/bin"

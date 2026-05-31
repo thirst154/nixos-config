@@ -1,10 +1,5 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: let
-  vicinae = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
-in {
+{pkgs, ...}: {
+  home.packages = [pkgs.hypridle];
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -28,7 +23,7 @@ in {
       ];
 
       bind = [
-        "$mainMod, Space, exec, ${vicinae}/bin/vicinae toggle"
+        "$mainMod, Space, exec, wofi --show drun"
         "$mainMod, Return, exec, $terminal"
         "$mainMod, C, killactive,"
         "$mainMod, M, exec, hyprctl dispatch exit"

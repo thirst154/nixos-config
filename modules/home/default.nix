@@ -6,7 +6,7 @@
     ./gtk.nix
     ./hyprland.nix
     ./mako.nix
-    ./vicinae.nix
+    ./wofi.nix
     ./waybar.nix
   ];
 

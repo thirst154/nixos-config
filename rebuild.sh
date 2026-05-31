@@ -2,7 +2,7 @@
 set -e
 pushd ~/nixos-config/
 
-if git diff --quiet '*.nix'; then
+if git diff --quiet '*.nix' 'flake.lock'; then
     echo "No changes detected, exiting."
     popd
     exit 0
@@ -17,7 +17,7 @@ git diff -U0 '*.nix'
 
 echo "NixOS Rebuilding..."
 sudo nixos-rebuild switch --flake ~/nixos-config#thinkpad &>nixos-switch.log || (
-    cat nixos-switch.log | grep --color error; exit 1)
+    cat nixos-switch.log | grep -iE --color 'error|warning'; exit 1)
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)

@@ -6,13 +6,7 @@
 
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
-    auto-optimise-store = true;
-    extra-substituters = [
-      "https://vicinae.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
-    ];
+    trusted-users = ["root" "thirst"];
   };
 
   nix.gc = {
@@ -20,6 +14,9 @@
     dates = "weekly";
     options = "--delete-older-than 14d";
   };
+
+  nix.optimise.automatic = true;
+  nix.optimise.dates = ["03:45"];
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono

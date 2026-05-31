@@ -39,4 +39,11 @@
     xdg-desktop-portal-gnome
     xdg-desktop-portal-hyprland
   ];
+  xdg.portal.config = {
+    common.default = ["gtk"];
+    hyprland."org.freedesktop.impl.portal.ScreenCast" = "hyprland";
+    hyprland."org.freedesktop.impl.portal.Screenshot" = "hyprland";
+  };
+
+  services.gnome.gnome-keyring.enable = true;
 }

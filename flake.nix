@@ -11,6 +11,7 @@
 
     ghostty = {
       url = "github:ghostty-org/ghostty";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     alejandra = {
@@ -22,10 +23,6 @@
       url = "github:schembriaiden/helium-browser-nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    vicinae = {
-      url = "github:vicinaehq/vicinae";
-    };
   };
 
   outputs = {
@@ -35,12 +32,12 @@
     ghostty,
     alejandra,
     helium,
-    vicinae,
     ...
   } @ inputs: let
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
   in {
+    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+
     nixosConfigurations = {
       thinkpad = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -58,7 +55,6 @@
             home-manager.users.thirst = import ./modules/home/default.nix;
             home-manager.extraSpecialArgs = {inherit inputs;};
             home-manager.sharedModules = [
-              vicinae.homeManagerModules.default
               {home.enableNixpkgsReleaseCheck = false;}
             ];
           }
