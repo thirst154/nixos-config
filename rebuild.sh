@@ -19,11 +19,12 @@ echo "NixOS Rebuilding..."
 sudo nixos-rebuild switch --flake ~/nixos-config#thinkpad &>nixos-switch.log || (
     cat nixos-switch.log | grep -iE --color 'error|warning'; exit 1)
 
-# Get current generation metadata
-current=$(nixos-rebuild list-generations | grep current)
+# Get current generation ID
+gen=$(nixos-rebuild list-generations | grep current | awk '{print $1}')
 
-# Commit all changes witih the generation metadata
-git commit -am "$current"
+# Stage and commit with generation ID
+git add '*.nix' flake.lock
+git commit -m "Generation $gen"
 
 # Back to where you were
 popd

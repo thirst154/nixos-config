@@ -10,6 +10,7 @@
     enable = true;
     audio.enable = true;
     pulse.enable = true;
+    wireplumber.enable = true;
   };
 
   environment.gnome.excludePackages = with pkgs; [
@@ -32,6 +33,7 @@
     waybar
     mako
     swaybg
+    brightnessctl
   ];
 
   xdg.portal.enable = true;
