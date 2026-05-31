@@ -8,6 +8,7 @@
     ./mako.nix
     ./wofi.nix
     ./waybar.nix
+    ./hyprlock.nix
   ];
 
   home.pointerCursor = {
