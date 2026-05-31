@@ -82,6 +82,10 @@
         ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
       ];
 
+      bindl = [
+        ", switch:Lid Switch, exec, hyprlock"
+      ];
+
       bindm = [
         "$mainMod, mouse:272, movewindow"
         "$mainMod, mouse:273, resizewindow"
