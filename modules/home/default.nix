@@ -9,6 +9,7 @@
     ./wofi.nix
     ./waybar.nix
     ./hyprlock.nix
+    ./nvim.nix
   ];
 
   home.pointerCursor = {
