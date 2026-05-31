@@ -22,6 +22,10 @@
       url = "github:schembriaiden/helium-browser-nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+    };
   };
 
   outputs = {
@@ -31,6 +35,7 @@
     ghostty,
     alejandra,
     helium,
+    vicinae,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -49,9 +54,11 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "hm-backup";
             home-manager.users.thirst = import ./modules/home/default.nix;
             home-manager.extraSpecialArgs = {inherit inputs;};
             home-manager.sharedModules = [
+              vicinae.homeManagerModules.default
               {home.enableNixpkgsReleaseCheck = false;}
             ];
           }

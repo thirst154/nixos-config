@@ -6,6 +6,7 @@
     ./gtk.nix
     ./hyprland.nix
     ./mako.nix
+    ./vicinae.nix
     ./waybar.nix
   ];
 
@@ -24,5 +25,6 @@
     };
   };
 
-  home.stateVersion = "24.11";
+  home.stateVersion = "26.05";
+  wayland.windowManager.hyprland.configType = "hyprlang";
 }

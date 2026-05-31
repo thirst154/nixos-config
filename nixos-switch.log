@@ -1,34 +1,33 @@
 warning: Git tree '/home/thirst/nixos-config' is dirty
 building the system configuration...
 warning: Git tree '/home/thirst/nixos-config' is dirty
-error:
-       … while calling the 'head' builtin
-         at «github:nixos/nixpkgs/64c08a7ca051951c8eae34e3e3cb1e202fe36786?narHash=sha256-tpyBcxPpcQb8ukyNF7DoCwfSY3VPsxHoYwj00Cayv5o%3D»/lib/attrsets.nix:1712:13:
-         1711|           if length values == 1 || pred here (elemAt values 1) (head values) then
-         1712|             head values
-             |             ^
-         1713|           else
-
-       … while evaluating the attribute 'value'
-         at «github:nixos/nixpkgs/64c08a7ca051951c8eae34e3e3cb1e202fe36786?narHash=sha256-tpyBcxPpcQb8ukyNF7DoCwfSY3VPsxHoYwj00Cayv5o%3D»/lib/modules.nix:1167:7:
-         1166|     // {
-         1167|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
-             |       ^
-         1168|       inherit (res.defsFinal') highestPrio;
-
-       … while evaluating the option `system.build.toplevel':
-
-       … while evaluating definitions from `/nix/store/81sr43harc753claf8bzyv3mrnjzq652-source/nixos/modules/system/activation/top-level.nix':
-
-       … while evaluating the option `assertions':
-
-       … while evaluating definitions from `/nix/store/yjs7i1p0ww3p1d91b5jlxvz1p6jswl0m-source/nixos/common.nix':
-
-       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
-
-       error: Path 'modules/home/hyprland.nix' in the repository "/home/thirst/nixos-config" is not tracked by Git.
-
-       To make it visible to Nix, run:
-
-       git -C "/home/thirst/nixos-config" add "modules/home/hyprland.nix"
-Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '/home/thirst/nixos-config#nixosConfigurations."thinkpad".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
+these 9 derivations will be built:
+  /nix/store/wdzb82c4vjk83qcn92xlwbq9wkhx7qsw-hm_hyprhyprland.conf.drv
+  /nix/store/r09i95dzaxlx407rpn6a4q8npp393r8m-home-manager-files.drv
+  /nix/store/zgyspramvwy99xy8xjsyjq7x9692qh75-activation-script.drv
+  /nix/store/5wcq8xf6y97978ygbzvcs0c0zz2raip2-home-manager-generation.drv
+  /nix/store/difqk212vk5mpav2i7vw6mj5j6z8zs3r-unit-home-manager-thirst.service.drv
+  /nix/store/3v8c57jaxhjap857973akj5b23ch4rzk-system-units.drv
+  /nix/store/g9vcy46d4iflb50fz9dxfxq035nns7w4-etc.drv
+  /nix/store/lhx49f32yq93pb16jl0wh5g132qd3qcm-activate.drv
+  /nix/store/xf0j6r6fp9vsbk0879x5qdcpp3a8wsja-nixos-system-thinkpad-26.05.20260523.64c08a7.drv
+building '/nix/store/wdzb82c4vjk83qcn92xlwbq9wkhx7qsw-hm_hyprhyprland.conf.drv'...
+building '/nix/store/zgyspramvwy99xy8xjsyjq7x9692qh75-activation-script.drv'...
+building '/nix/store/r09i95dzaxlx407rpn6a4q8npp393r8m-home-manager-files.drv'...
+building '/nix/store/5wcq8xf6y97978ygbzvcs0c0zz2raip2-home-manager-generation.drv'...
+building '/nix/store/difqk212vk5mpav2i7vw6mj5j6z8zs3r-unit-home-manager-thirst.service.drv'...
+building '/nix/store/3v8c57jaxhjap857973akj5b23ch4rzk-system-units.drv'...
+building '/nix/store/g9vcy46d4iflb50fz9dxfxq035nns7w4-etc.drv'...
+building '/nix/store/lhx49f32yq93pb16jl0wh5g132qd3qcm-activate.drv'...
+building '/nix/store/xf0j6r6fp9vsbk0879x5qdcpp3a8wsja-nixos-system-thinkpad-26.05.20260523.64c08a7.drv'...
+Checking switch inhibitors... done
+activating the configuration...
+warning: not applying UID change of user ‘gdm-greeter-2’ (60580 -> 60579) in /etc/passwd
+warning: not applying UID change of user ‘gdm-greeter-3’ (60581 -> 60580) in /etc/passwd
+warning: not applying UID change of user ‘gdm-greeter-4’ (60582 -> 60581) in /etc/passwd
+setting up /etc...
+reloading user units for thirst...
+restarting sysinit-reactivation.target
+restarting the following units: home-manager-thirst.service
+the following new units were started: NetworkManager-dispatcher.service
+Done. The new configuration is /nix/store/wnhxpn9i7jch75qdwb0x56cn5dnrcfim-nixos-system-thinkpad-26.05.20260523.64c08a7

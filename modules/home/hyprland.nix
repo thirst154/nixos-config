@@ -1,6 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: let
+  vicinae = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
+in {
   wayland.windowManager.hyprland = {
     enable = true;
+    systemd.enable = true;
     settings = {
       monitor = [",preferred,auto,1"];
 
@@ -14,11 +21,14 @@
       ];
 
       exec-once = [
-        "waybar & hypridle & mako"
+        "waybar"
+        "hypridle"
+        "mako"
+        "${pkgs.swaybg}/bin/swaybg -i ${./../../assets/Wallpaper.jpeg}"
       ];
 
       bind = [
-        "$mainMod, Space, exec, wofi --show drun"
+        "$mainMod, Space, exec, ${vicinae}/bin/vicinae toggle"
         "$mainMod, Return, exec, $terminal"
         "$mainMod, C, killactive,"
         "$mainMod, M, exec, hyprctl dispatch exit"
