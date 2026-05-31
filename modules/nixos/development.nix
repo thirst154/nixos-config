@@ -22,6 +22,7 @@
     gdb
 
     # Ebitengine dependencies (graphics & audio libraries)
+    libX11
     mesa
     libXcursor
     libXi
