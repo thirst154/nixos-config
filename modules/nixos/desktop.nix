@@ -1,13 +1,9 @@
 {pkgs, ...}: {
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.cage}/bin/cage -s -- ${pkgs.regreet}/bin/regreet";
-        user = "greeter";
-      };
-    };
-  };
+  services.xserver.enable = true;
+  services.xserver.videoDrivers = ["modesetting"];
+  services.displayManager.gdm.enable = true;
+  services.displayManager.defaultSession = "hyprland";
+  services.desktopManager.gnome.enable = true;
 
   programs.hyprland.enable = true;
 
@@ -20,15 +16,15 @@
     wireplumber.enable = true;
   };
 
-  #environment.gnome.excludePackages = with pkgs; [
-  #  gnome-tour
-  #  epiphany
-  #  geary
-  #];
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-tour
+    epiphany
+    geary
+  ];
 
   environment.systemPackages = with pkgs; [
-    #gnome-tweaks
-    #gnome-extension-manager
+    gnome-tweaks
+    gnome-extension-manager
     wl-clipboard
     xdg-utils
     pavucontrol
@@ -41,10 +37,6 @@
     mako
     swaybg
     brightnessctl
-
-    # Greeter theming
-    papirus-icon-theme
-    bibata-cursors
   ];
 
   xdg.portal.enable = true;
@@ -59,15 +51,4 @@
   };
 
   services.gnome.gnome-keyring.enable = true;
-
-  environment.etc."greetd/regreet.toml".text = ''
-    [background]
-    path = "${./../../assets/Wallpaper.jpeg}"
-    fit = "Cover"
-
-    [GTK]
-    application_prefer_dark_theme = true
-    icon_theme_name = "Papirus-Dark"
-    cursor_theme_name = "Bibata-Modern-Classic"
-  '';
 }
