@@ -18,6 +18,8 @@
 
     # AI
     opencode
+
+    tor-browser
   ];
 
   environment.variables.EDITOR = "nvim";
