@@ -45,10 +45,18 @@
     xdg-desktop-portal-hyprland
   ];
   xdg.portal.config = {
-    common.default = ["gtk"];
-    hyprland."org.freedesktop.impl.portal.ScreenCast" = "hyprland";
-    hyprland."org.freedesktop.impl.portal.Screenshot" = "hyprland";
+    common = {
+      default = ["gtk"];
+    };
+    hyprland = {
+      default = ["gtk" "hyprland"];
+      "org.freedesktop.impl.portal.ScreenCast" = ["hyprland"];
+      "org.freedesktop.impl.portal.Screenshot" = ["hyprland"];
+      "org.freedesktop.impl.portal.FileChooser" = ["gtk"];
+    };
   };
 
   services.gnome.gnome-keyring.enable = true;
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }
