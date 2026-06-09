@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-pushd ~/nixos-config/
+pushd /home/thirst/nixos-config/
 
 echo "Updating flake inputs..."
 nix flake update
