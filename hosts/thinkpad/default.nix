@@ -40,6 +40,8 @@
   programs.gnupg.agent.enable = true;
 
   services.fprintd.enable = true;
+  security.pam.services.sudo.fprintAuth = true;
+  security.pam.services.login.fprintAuth = true;
 
   users.users.thirst = {
     isNormalUser = true;
