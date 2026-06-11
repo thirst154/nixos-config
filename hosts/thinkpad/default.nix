@@ -20,9 +20,11 @@
   boot.initrd.kernelModules = ["i915"];
   boot.kernelModules = ["i915"];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 10;
-  boot.loader.systemd-boot.editor = false;
+  boot.loader.systemd-boot.enable = false;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "nodev";
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
 
   console.keyMap = "uk";
