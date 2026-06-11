@@ -1,0 +1,29 @@
+# Evergarden Summer
+# A comfy colorscheme for cozy morning coding
+# https://github.com/everviolet/nvim
+
+palette = 0=#2b3034
+palette = 1=#c58687
+palette = 2=#91a77a
+palette = 3=#c4aa80
+palette = 4=#8294ad
+palette = 5=#a897b8
+palette = 6=#74a48b
+palette = 7=#e8ded5
+palette = 8=#576869
+palette = 9=#c69883
+palette = 10=#abb182
+palette = 11=#c4aa80
+palette = 12=#719f96
+palette = 13=#c499b8
+palette = 14=#7799a3
+palette = 15=#f5efe6
+
+background = #f5efe6
+foreground = #2b3034
+
+cursor-color = #91a77a
+cursor-text = #f5efe6
+
+selection-background = #e6e1d3
+selection-foreground = #2b3034

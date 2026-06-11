@@ -1,7 +1,16 @@
-{pkgs, ...}: {
-  xdg.configFile."ghostty/config".text = ''
-    theme = Everforest Dark Hard
-    font-family = JetBrainsMono Nerd Font
-    font-size = 15
-  '';
+{pkgs, ...}: let
+  themeFile = name: builtins.readFile (../../assets/ghostty-themes + "/${name}");
+in {
+  xdg.configFile = {
+    "ghostty/config".text = ''
+      theme = Evergarden Fall
+      font-family = JetBrainsMono Nerd Font
+      font-size = 15
+    '';
+
+    "ghostty/themes/Evergarden Fall".text = themeFile "Evergarden Fall";
+    "ghostty/themes/Evergarden Winter".text = themeFile "Evergarden Winter";
+    "ghostty/themes/Evergarden Spring".text = themeFile "Evergarden Spring";
+    "ghostty/themes/Evergarden Summer".text = themeFile "Evergarden Summer";
+  };
 }
