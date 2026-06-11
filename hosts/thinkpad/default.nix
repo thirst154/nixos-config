@@ -39,6 +39,8 @@
   programs.zsh.enable = true;
   programs.gnupg.agent.enable = true;
 
+  services.fprintd.enable = true;
+
   users.users.thirst = {
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager" "video" "audio"];
