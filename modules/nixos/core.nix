@@ -15,6 +15,8 @@
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
     trusted-users = ["root" "thirst"];
+    extra-substituters = ["https://vicinae.cachix.org"];
+    extra-trusted-public-keys = ["vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="];
   };
 
   nix.gc = {

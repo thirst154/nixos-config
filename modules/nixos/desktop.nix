@@ -25,7 +25,6 @@
     pavucontrol
     networkmanagerapplet
 
-    kitty
     waybar
     mako
     swaybg
