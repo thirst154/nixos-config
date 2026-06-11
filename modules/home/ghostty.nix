@@ -6,6 +6,7 @@ in {
       theme = Evergarden Spring
       font-family = JetBrainsMono Nerd Font
       font-size = 15
+      background-opacity = 0.8
     '';
 
     "ghostty/themes/Evergarden Fall".text = themeFile "Evergarden Fall";
