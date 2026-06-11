@@ -1,0 +1,8 @@
+[SddmGreeterTheme]
+Name=Custom
+Description=Custom dark theme matching waybar and mako
+Type=sddm-theme
+Version=1.0
+MainScript=Main.qml
+ConfigFile=theme.conf
+Theme-API=2.0
