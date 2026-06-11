@@ -32,7 +32,7 @@
     vim.pack.add({ { src = "https://codeberg.org/evergarden/nvim.git", name = "evergarden" } })
 
     require("evergarden").setup({
-        theme: {
+        theme = {
             varient = "spring"
         }
 
