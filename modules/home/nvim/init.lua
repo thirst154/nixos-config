@@ -1,5 +1,3 @@
-{pkgs, ...}: {
-  xdg.configFile."nvim/init.lua".text = ''
     vim.g.mapleader = " "
 
     local map = vim.keymap.set
@@ -103,5 +101,3 @@
     map("n", "<leader>fg", ":Pick grep_live<CR>")
 
     require("mini.pairs").setup()
-  '';
-}

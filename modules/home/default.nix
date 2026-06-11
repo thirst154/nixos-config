@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./shell.nix
     ./ghostty.nix
@@ -9,9 +13,15 @@
     ./wofi.nix
     ./waybar.nix
     ./hyprlock.nix
-    ./nvim.nix
+    # ./nvim.nix
     ./vicinae.nix
   ];
+
+  # NVIM
+  home.file.".config/nvim" = {
+    source = ./nvim;
+    recursive = true;
+  };
 
   home.pointerCursor = {
     gtk.enable = true;
