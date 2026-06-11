@@ -2,7 +2,7 @@
   xdg.configFile."hypr/hyprlock.conf".text = ''
     background {
         monitor =
-        path = /home/thirst/nixos-config/assets/Wallpaper1.jpeg
+        path = /home/thirst/nixos-config/assets/Wallpaper1.jpg
     }
 
     general {

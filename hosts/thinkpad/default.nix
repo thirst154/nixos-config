@@ -22,6 +22,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.systemd-boot.editor = false;
   boot.loader.efi.canTouchEfiVariables = true;
 
   console.keyMap = "uk";
@@ -38,7 +39,7 @@
 
   users.users.thirst = {
     isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager" "video" "audio" "docker"];
+    extraGroups = ["wheel" "networkmanager" "video" "audio"];
     shell = pkgs.zsh;
   };
 

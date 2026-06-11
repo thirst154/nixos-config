@@ -25,8 +25,6 @@
     pavucontrol
     networkmanagerapplet
 
-    waybar
-    mako
     swaybg
     brightnessctl
     nautilus

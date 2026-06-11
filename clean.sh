@@ -6,6 +6,6 @@ rm -rf result/
 rm -f nixos-switch.log
 
 echo "Running Nix garbage collector..."
-nix-collect-garbage -d
+nix-collect-garbage
 
 echo "Cleanup complete."

@@ -2,20 +2,21 @@
 set -e
 pushd ~/nixos-config/
 
-if git diff --quiet '*.nix' 'flake.lock'; then
+if git diff --quiet; then
     echo "No changes detected, exiting."
     popd
     exit 0
 fi
 
 # Autoformat your nix files
-alejandra . &>/dev/null \
-  || ( alejandra . ; echo "formatting failed!"; exit 1)
+alejandra . \
+  || ( echo "formatting failed!"; exit 1)
 
 # Shows your changes
 git diff -U0 '*.nix'
 
 echo "NixOS Rebuilding..."
+sudo -v
 sudo nixos-rebuild switch --flake ~/nixos-config#thinkpad &>nixos-switch.log || (
     cat nixos-switch.log | grep -iE --color 'error|warning'; exit 1)
 
@@ -23,7 +24,7 @@ sudo nixos-rebuild switch --flake ~/nixos-config#thinkpad &>nixos-switch.log || 
 gen=$(sudo nixos-rebuild list-generations | grep current | awk '{print $1}')
 
 # Stage and commit with generation ID
-git add '*.nix' flake.lock
+git add -A
 git commit -m "Generation $gen"
 
 # Back to where you were

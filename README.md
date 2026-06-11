@@ -4,7 +4,7 @@ NixOS flake for **thinkpad** — a ThinkPad laptop running NixOS unstable with H
 
 ## Features
 
-- **Hyprland desktop environment**: Wayland compositor with GDM display manager
+- **Hyprland desktop environment**: Wayland compositor with `ly` display manager
 - **UK keyboard layout** everywhere: console, X11/GDM, and Hyprland
 - **ThinkPad-specific tweaks**: TLP for power management, Bluetooth with blueman, libinput touchpad
 - **Gaming ready**: Steam, GameMode, MangoHud, Gamescope, Lutris, Winetricks, ATLauncher
@@ -116,9 +116,10 @@ This will:
 
 ## Notable Configurations
 
-- **State versions**: NixOS `24.11`, Home Manager `26.05`
+- **State versions**: NixOS `24.11`, Home Manager `24.11`
 - **Home Manager**: Uses global pkgs and user packages, with `.hm-backup` file extension for collisions
 - **Vicinae cachix**: Binary cache configured for faster builds
-- **Docker tools**: Docker and docker-compose installed; user is in the `docker` group
+- **Secrets management**: No secrets management framework (sops-nix/agenix) currently configured — secrets are not stored in this repo
 - **GPG Agent**: Enabled for signing and key management
 - **GNOME Keyring**: Enabled for secret storage
+- **Firewall**: Default NixOS firewall is enabled; `localsend` and `transmission_4-gtk` may require explicit port rules if inbound connections are needed

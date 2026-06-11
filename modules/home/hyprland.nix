@@ -19,7 +19,6 @@
         "waybar"
         "hypridle"
         "mako"
-        "vicinae server"
         "${pkgs.swaybg}/bin/swaybg -i ${./../../assets/Wallpaper1.jpg}"
       ];
 

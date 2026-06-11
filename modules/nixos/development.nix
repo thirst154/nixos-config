@@ -31,8 +31,6 @@
     libXxf86vm
     alsa-lib
 
-    docker
-    docker-compose
     lazygit
     jq
     htop
