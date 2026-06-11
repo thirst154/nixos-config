@@ -3,7 +3,7 @@
 in {
   xdg.configFile = {
     "ghostty/config".text = ''
-      theme = Evergarden Fall
+      theme = Evergarden Spring
       font-family = JetBrainsMono Nerd Font
       font-size = 15
     '';
