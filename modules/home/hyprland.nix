@@ -19,11 +19,12 @@
         "waybar"
         "hypridle"
         "mako"
+        "vicinae server"
         "${pkgs.swaybg}/bin/swaybg -i ${./../../assets/Wallpaper.jpeg}"
       ];
 
       bind = [
-        "$mainMod, Space, exec, wofi --show drun"
+        "$mainMod, Space, exec, vicinae toggle"
         "$mainMod, Return, exec, $terminal"
         "$mainMod, C, killactive,"
         "$mainMod, M, exec, hyprctl dispatch exit"
