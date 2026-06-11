@@ -16,7 +16,7 @@ in {
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    theme = "custom";
+    theme = "${sddm-theme}/share/sddm/themes/custom";
   };
 
   programs.hyprland = {
