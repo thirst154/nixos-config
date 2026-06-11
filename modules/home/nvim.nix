@@ -22,12 +22,21 @@
     vim.opt.wrap = false
 
     vim.opt.termguicolors = true
-    vim.cmd.colorscheme("catppuccin")
+    --vim.cmd.colorscheme("catppuccin")
 
     vim.g.netrw_banner = 0
 
     vim.opt.spell = true
     vim.opt.spelllang = "en_gb"
+
+    vim.pack.add({ { src = "https://codeberg.org/evergarden/nvim.git", name = "evergarden" } })
+
+    require("evergarden").setup({
+        theme: {
+            varient = "spring"
+        }
+
+    })
 
     vim.pack.add({
         { src = "https://github.com/nvim-treesitter/nvim-treesitter" }
