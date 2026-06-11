@@ -37,6 +37,9 @@
     jq
     htop
     tree
+
+    # Cloudflare
+    wrangler
   ];
 
   environment.sessionVariables = {
