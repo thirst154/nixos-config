@@ -33,6 +33,7 @@ in {
 
     # AI
     opencode
+    opencode-desktop
 
     tor-browser
     firefox
