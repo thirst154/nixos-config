@@ -38,6 +38,11 @@
     };
   };
 
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+  };
+
   home.stateVersion = "24.11";
   wayland.windowManager.hyprland.configType = "hyprlang";
 }

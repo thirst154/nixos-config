@@ -30,7 +30,7 @@
     vim.pack.add({ { src = "https://codeberg.org/evergarden/nvim.git", name = "evergarden" } })
 
     vim.cmd.colorscheme("evergarden-spring")
-
+    
     vim.pack.add({
         { src = "https://github.com/nvim-treesitter/nvim-treesitter" }
     })
