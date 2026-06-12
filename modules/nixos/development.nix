@@ -1,27 +1,72 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
+    # General development tools
+    direnv
+    just
+    lazygit
+    jq
+    htop
+    tree
+
+    # Python
     python3
     uv
+    ruff
+    pyright
 
+    # JavaScript / TypeScript
     nodejs
     pnpm
+    bun
     typescript
     typescript-language-server
-    lua-language-server
-    stylua
-    bun
+    prettierd
 
+    # Rust
     rustup
+    rust-analyzer
 
+    # Go
     go
     gopls
+    gofumpt
+    delve
 
+    # C / C++
     gcc
     clang
     cmake
     gnumake
     pkg-config
     gdb
+    clang-tools
+
+    # Lua
+    lua-language-server
+    stylua
+
+    # Nix
+    nil
+    nixfmt-rfc-style
+
+    # TOML
+    taplo
+
+    # Shell
+    shellcheck
+    shfmt
+
+    # Markdown
+    marksman
+
+    # YAML
+    yaml-language-server
+
+    # Other
+    actionlint
+
+    # Cloudflare
+    wrangler
 
     # Ebitengine dependencies (graphics & audio libraries)
     libX11
@@ -32,14 +77,6 @@
     libXrandr
     libXxf86vm
     alsa-lib
-
-    lazygit
-    jq
-    htop
-    tree
-
-    # Cloudflare
-    wrangler
   ];
 
   environment.sessionVariables = {
