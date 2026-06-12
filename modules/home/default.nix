@@ -18,11 +18,10 @@
   ];
 
   # NVIM
-  home.file.".config/nvim" = {
-    source = ./nvim;
+  xdg.configFile."nvim" = {
+    source = config.lib.file.mkOutOfStoreSymlink "/home/thirst/nixos-config/modules/home/nvim";
     recursive = true;
   };
-
   home.pointerCursor = {
     gtk.enable = true;
     package = pkgs.bibata-cursors;
