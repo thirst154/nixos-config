@@ -13,15 +13,9 @@
     ./wofi.nix
     ./waybar.nix
     ./hyprlock.nix
-    # ./nvim.nix
     ./vicinae.nix
   ];
 
-  # NVIM
-  xdg.configFile."nvim" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/thirst/nixos-config/modules/home/nvim";
-    recursive = true;
-  };
   home.pointerCursor = {
     gtk.enable = true;
     package = pkgs.bibata-cursors;
