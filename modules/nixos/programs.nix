@@ -35,7 +35,7 @@ in {
     opencode-desktop
 
     tor-browser
-    firefox
+    gnome-boxes
   ];
 
   environment.variables.EDITOR = "nvim";
