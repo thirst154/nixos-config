@@ -7,6 +7,8 @@
     pnpm
     typescript
     typescript-language-server
+    lua-language-server
+    stylua
     bun
 
     rustup
