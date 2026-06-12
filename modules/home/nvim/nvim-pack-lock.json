@@ -1,0 +1,32 @@
+{
+  "plugins": {
+    "conform.nvim": {
+      "rev": "619363c30309d29ffa631e67c8183f2a72caa373",
+      "src": "https://github.com/stevearc/conform.nvim"
+    },
+    "evergarden": {
+      "rev": "6a47a90e5caf1b21e54ff7967017c255bab80fdd",
+      "src": "https://codeberg.org/evergarden/nvim.git"
+    },
+    "mason-lspconfig.nvim": {
+      "rev": "906c32c8a034dd3d51353d63226bf91aeacd927c",
+      "src": "https://github.com/mason-org/mason-lspconfig.nvim"
+    },
+    "mason.nvim": {
+      "rev": "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
+    "mini.nvim": {
+      "rev": "a59a9b7fb0a42cbcf022938ee5f0724320b66f63",
+      "src": "https://github.com/nvim-mini/mini.nvim"
+    },
+    "nvim-lspconfig": {
+      "rev": "ed19590a3a9792901553c388d1aadafce012f80d",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-treesitter": {
+      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    }
+  }
+}
