@@ -56,6 +56,9 @@
     shellcheck
     shfmt
 
+    # HTML / CSS / Emmet
+    emmet-language-server
+
     # Markdown
     marksman
 
