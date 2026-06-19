@@ -36,6 +36,7 @@ in {
     opencode-desktop
 
     tor-browser
+    rpi-imager
     gnome-boxes
   ];
 
