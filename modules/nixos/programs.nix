@@ -3,6 +3,10 @@
   pkgs,
   ...
 }: let
+  rpi-imager = pkgs.writeShellScriptBin "rpi-imager" ''
+    exec sudo -E env QT_QPA_PLATFORM=wayland ${pkgs.rpi-imager}/bin/rpi-imager "$@"
+  '';
+
   helium-fixed = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (
     old: let
       phase1 =
