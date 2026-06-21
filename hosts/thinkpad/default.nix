@@ -18,7 +18,12 @@
   hardware.enableRedistributableFirmware = true;
 
   boot.initrd.kernelModules = ["i915"];
-  boot.kernelModules = ["i915"];
+  boot.kernelModules = ["i915" "mmc_block"];
+
+  services.udev.extraRules = ''
+    # Disable PCI runtime PM for Genesys GL9750 SD card reader
+    SUBSYSTEM=="pci", ATTR{vendor}=="0x17a0", ATTR{device}=="0x9750", ATTR{power/control}="on"
+  '';
 
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub.enable = true;

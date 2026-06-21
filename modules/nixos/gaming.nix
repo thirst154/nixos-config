@@ -23,5 +23,6 @@
     gamescope
 
     atlauncher
+    prismlauncher
   ];
 }
