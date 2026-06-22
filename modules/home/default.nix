@@ -36,6 +36,10 @@
     createDirectories = true;
   };
 
+  home.sessionVariables = {
+    XDG_DATA_DIRS = "${pkgs.gtk3}/share/gsettings-schemas/gtk+3-${pkgs.gtk3.version}:\${XDG_DATA_DIRS}";
+  };
+
   home.stateVersion = "24.11";
   wayland.windowManager.hyprland.configType = "hyprlang";
 }
