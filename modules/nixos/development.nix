@@ -74,6 +74,9 @@
     # Cloudflare
     wrangler
 
+    # Google Cloud
+    google-cloud-sdk
+
     # Ebitengine dependencies (graphics & audio libraries)
     libX11
     mesa
