@@ -8,6 +8,9 @@
     htop
     tree
 
+    # Infra as code application
+    pulumi-bin
+
     # Python
     python3
     uv
