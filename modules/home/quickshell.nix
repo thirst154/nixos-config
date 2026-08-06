@@ -6,7 +6,8 @@
       import QtQuick
       import Quickshell
       import Quickshell.Hyprland
-      import Quickshell.Services
+      import Quickshell.Services.UPower
+      import Quickshell.Services.Pipewire
 
       PanelWindow {
         anchors {
@@ -91,14 +92,14 @@
             font.family: fontName
             font.pixelSize: fontSize
             color: "#ffffff"
-            text: BatteryService.percent + "%"
+            text: UPower.displayDevice.percentage + "%"
           }
 
           Text {
             font.family: fontName
             font.pixelSize: fontSize
             color: "#ffffff"
-            text: AudioService.defaultSink.volume + "%"
+            text: Pipewire.defaultAudioSink.volume + "%"
           }
         }
       }
