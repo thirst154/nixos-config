@@ -37,7 +37,7 @@
               spacing: 0
 
               Repeater {
-                model: HyprlandWorkspaceModel {}
+                model: Hyprland.workspaces
                 delegate: Rectangle {
                   width: 28
                   height: 32
@@ -47,13 +47,13 @@
                     anchors.centerIn: parent
                     font.family: fontName
                     font.pixelSize: 10
-                    color: model.active ? "#ffffff" : "#5a5a5a"
-                    text: model.active ? "\u25CF" : "\u25CB"
+                    color: modelData.active ? "#ffffff" : "#5a5a5a"
+                    text: modelData.active ? "\u25CF" : "\u25CB"
                   }
 
                   MouseArea {
                     anchors.fill: parent
-                    onClicked: Hyprland.dispatch("workspace", model.id)
+                    onClicked: Hyprland.dispatch("workspace " + modelData.id)
                   }
                 }
               }

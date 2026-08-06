@@ -7,33 +7,33 @@ evaluation warning: The default value of `xdg.userDirs.setSessionVariables` has 
                       xdg.userDirs.setSessionVariables = true;
                     To adopt the new default behavior, set:
                       xdg.userDirs.setSessionVariables = false;
-evaluation warning: thirst profile: The option `services.vicinae.systemd.environment' defined in `/nix/store/14lkwr4136i7dmfz1cr0pm5757qj8d2y-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.environment'.
-evaluation warning: thirst profile: The option `services.vicinae.systemd.autoStart' defined in `/nix/store/14lkwr4136i7dmfz1cr0pm5757qj8d2y-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.autoStart'.
-evaluation warning: thirst profile: The option `services.vicinae.systemd.enable' defined in `/nix/store/14lkwr4136i7dmfz1cr0pm5757qj8d2y-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.enable'.
-evaluation warning: thirst profile: The option `services.vicinae.enable' defined in `/nix/store/14lkwr4136i7dmfz1cr0pm5757qj8d2y-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.enable'.
-evaluation warning: thirst profile: The option `programs.kitty.theme' defined in `/nix/store/14lkwr4136i7dmfz1cr0pm5757qj8d2y-source/modules/home/kitty.nix' has been changed to `programs.kitty.themeFile' that has a different type. Please read `programs.kitty.themeFile' documentation and update your configuration accordingly.
+evaluation warning: thirst profile: The option `services.vicinae.systemd.environment' defined in `/nix/store/m3ha3mcljipmb10v0mlkkd7rph7iikm8-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.environment'.
+evaluation warning: thirst profile: The option `services.vicinae.systemd.autoStart' defined in `/nix/store/m3ha3mcljipmb10v0mlkkd7rph7iikm8-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.autoStart'.
+evaluation warning: thirst profile: The option `services.vicinae.systemd.enable' defined in `/nix/store/m3ha3mcljipmb10v0mlkkd7rph7iikm8-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.enable'.
+evaluation warning: thirst profile: The option `services.vicinae.enable' defined in `/nix/store/m3ha3mcljipmb10v0mlkkd7rph7iikm8-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.enable'.
+evaluation warning: thirst profile: The option `programs.kitty.theme' defined in `/nix/store/m3ha3mcljipmb10v0mlkkd7rph7iikm8-source/modules/home/kitty.nix' has been changed to `programs.kitty.themeFile' that has a different type. Please read `programs.kitty.themeFile' documentation and update your configuration accordingly.
 evaluation warning: thirst profile: Relying on `home.pointerCursor` to enable cursor config generation is deprecated.
                     Please update your configuration to explicitly set:
 
                       home.pointerCursor.enable = true;
 evaluation warning: nixfmt-rfc-style is now the same as pkgs.nixfmt which should be used instead.
 these 8 derivations will be built:
-  /nix/store/87bd4allyg7pa04myvsrckpzn3lz71gj-hm_quickshellshell.qml.drv
-  /nix/store/cwmf0n0mlprzcdh0cgvj6sdh8b5m1iw3-home-manager-files.drv
-  /nix/store/qw0klrqfs5539a5747b358drw2i1qwnc-home-manager-generation.drv
-  /nix/store/2hzsq0q0zg06fxgglwl4pvmlf5km7dcw-unit-home-manager-thirst.service.drv
-  /nix/store/9n68r5fl2j0kg0m5n3ya6fnmjl2c7yl9-system-units.drv
-  /nix/store/5vh5xqi6dd7xx3fqik1gjajhf7y7n92l-etc.drv
-  /nix/store/sn77fpz1lvr37bv42sdzgmg1q5851my7-activate.drv
-  /nix/store/d6rw41fyasqhg1c6bv0zi9zdkwf32ljy-nixos-system-thinkpad-26.11.20260804.e72e4f2.drv
-building '/nix/store/87bd4allyg7pa04myvsrckpzn3lz71gj-hm_quickshellshell.qml.drv'...
-building '/nix/store/cwmf0n0mlprzcdh0cgvj6sdh8b5m1iw3-home-manager-files.drv'...
-building '/nix/store/qw0klrqfs5539a5747b358drw2i1qwnc-home-manager-generation.drv'...
-building '/nix/store/2hzsq0q0zg06fxgglwl4pvmlf5km7dcw-unit-home-manager-thirst.service.drv'...
-building '/nix/store/9n68r5fl2j0kg0m5n3ya6fnmjl2c7yl9-system-units.drv'...
-building '/nix/store/5vh5xqi6dd7xx3fqik1gjajhf7y7n92l-etc.drv'...
-building '/nix/store/sn77fpz1lvr37bv42sdzgmg1q5851my7-activate.drv'...
-building '/nix/store/d6rw41fyasqhg1c6bv0zi9zdkwf32ljy-nixos-system-thinkpad-26.11.20260804.e72e4f2.drv'...
+  /nix/store/7cr4jqm61j62qskn84s5fxc0jpwzxrjb-hm_quickshellshell.qml.drv
+  /nix/store/56px989ixd1fvvzcjf7xgq3n96jc3vqz-home-manager-files.drv
+  /nix/store/vqf131x8sd8f8kcjdw8bqk75vmki18qv-home-manager-generation.drv
+  /nix/store/9hn9bib7kbv1z8x16pc3lpbr52zlrhck-unit-home-manager-thirst.service.drv
+  /nix/store/84k9izi0rcf4rqcgc7jz1m37z3znh9iy-system-units.drv
+  /nix/store/df2is918q6071j32x05ylfdqk6jslww2-etc.drv
+  /nix/store/8fyajn6ky406kjhmcz7d7ks8cl28fawi-activate.drv
+  /nix/store/v8g7xv6h17ml2jvv09c8m7q2lc04j2pm-nixos-system-thinkpad-26.11.20260804.e72e4f2.drv
+building '/nix/store/7cr4jqm61j62qskn84s5fxc0jpwzxrjb-hm_quickshellshell.qml.drv'...
+building '/nix/store/56px989ixd1fvvzcjf7xgq3n96jc3vqz-home-manager-files.drv'...
+building '/nix/store/vqf131x8sd8f8kcjdw8bqk75vmki18qv-home-manager-generation.drv'...
+building '/nix/store/9hn9bib7kbv1z8x16pc3lpbr52zlrhck-unit-home-manager-thirst.service.drv'...
+building '/nix/store/84k9izi0rcf4rqcgc7jz1m37z3znh9iy-system-units.drv'...
+building '/nix/store/df2is918q6071j32x05ylfdqk6jslww2-etc.drv'...
+building '/nix/store/8fyajn6ky406kjhmcz7d7ks8cl28fawi-activate.drv'...
+building '/nix/store/v8g7xv6h17ml2jvv09c8m7q2lc04j2pm-nixos-system-thinkpad-26.11.20260804.e72e4f2.drv'...
 Checking switch inhibitors... done
 updating GRUB 2 menu...
 activating the configuration...
@@ -43,4 +43,4 @@ restarting the following user units: nixos-activation.service
 restarting sysinit-reactivation.target
 restarting the following units: home-manager-thirst.service
 the following new units were started: NetworkManager-dispatcher.service
-Done. The new configuration is /nix/store/2mrwj14674bg8wpcg0hbagcdqy6lai7g-nixos-system-thinkpad-26.11.20260804.e72e4f2
+Done. The new configuration is /nix/store/5bc61hd1lqk5agl2g5bi80sn0jvbz0wn-nixos-system-thinkpad-26.11.20260804.e72e4f2
