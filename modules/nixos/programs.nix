@@ -38,8 +38,6 @@ in {
     opencode
     tor-browser
     gnome-boxes
-
-    blender
   ];
 
   environment.variables.EDITOR = "nvim";
