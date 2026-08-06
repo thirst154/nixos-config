@@ -26,7 +26,6 @@ in {
     vscode
     gh
     neovim
-    emacs
     helium-fixed
     inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
     zed-editor
@@ -37,11 +36,10 @@ in {
 
     # AI
     opencode
-    opencode-desktop
-
     tor-browser
-    rpi-imager
     gnome-boxes
+
+    blender
   ];
 
   environment.variables.EDITOR = "nvim";

@@ -14,14 +14,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    steam-run
-    mangohud
-    protonup-qt
-    lutris
-    winetricks
-    goverlay
-    gamescope
-
     atlauncher
     prismlauncher
   ];

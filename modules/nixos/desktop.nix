@@ -1,8 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: let
+{pkgs, ...}: let
   sddm-theme = pkgs.stdenv.mkDerivation {
     name = "sddm-theme";
     src = ../../assets/sddm-theme;
@@ -22,8 +18,6 @@ in {
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
   };
 
   services.pipewire = {

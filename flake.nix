@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hyprland.url = "github:hyprwm/Hyprland/v0.55.0";
     vicinae.url = "github:vicinaehq/vicinae";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -30,7 +29,6 @@
     self,
     nixpkgs,
     home-manager,
-    hyprland,
     vicinae,
     ghostty,
     alejandra,
@@ -46,6 +44,11 @@
         inherit system;
         specialArgs = {inherit inputs;};
         modules = [
+          ({...}: {
+            nixpkgs.overlays = [
+              (import ./overlays/glaze-fix.nix)
+            ];
+          })
           ./hosts/thinkpad/default.nix
           home-manager.nixosModules.home-manager
           vicinae.nixosModules.default
