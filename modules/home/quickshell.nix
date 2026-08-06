@@ -9,6 +9,7 @@ in {
       import QtQuick
       import Quickshell
       import Quickshell.Hyprland
+      import Quickshell.Io
       import Quickshell.Services.UPower
       import Quickshell.Services.Pipewire
 
@@ -24,30 +25,24 @@ in {
         property string fontName: "JetBrainsMonoNL Nerd Font"
         property int fontSize: 13
 
-        property int brightnessPercent: 0
-
-        function updateBrightness() {
-          var brightnessFile = Qt.createQmlObject('import QtQuick 2.0; TextFile {}', this)
-          var maxFile = Qt.createQmlObject('import QtQuick 2.0; TextFile {}', this)
-          try {
-            brightnessFile.source = "file://${brightnessPath}"
-            maxFile.source = "file://${maxBrightnessPath}"
-            var b = parseInt(brightnessFile.text)
-            var m = parseInt(maxFile.text)
-            if (!isNaN(b) && !isNaN(m) && m > 0) {
-              brightnessPercent = Math.round((b / m) * 100)
-            }
-          } catch (e) {}
-          brightnessFile.destroy()
-          maxFile.destroy()
+        FileView {
+          id: brightnessFile
+          path: "${brightnessPath}"
+          watchChanges: true
         }
 
-        Timer {
-          interval: 5000
-          repeat: true
-          running: true
-          triggeredOnStart: true
-          onTriggered: updateBrightness()
+        FileView {
+          id: maxBrightnessFile
+          path: "${maxBrightnessPath}"
+        }
+
+        property int brightnessPercent: {
+          var b = parseInt(brightnessFile.text())
+          var m = parseInt(maxBrightnessFile.text())
+          if (!isNaN(b) && !isNaN(m) && m > 0) {
+            return Math.round((b / m) * 100)
+          }
+          return 0
         }
 
         Row {
@@ -121,7 +116,12 @@ in {
             font.family: fontName
             font.pixelSize: fontSize
             color: "#ffffff"
-            text: Pipewire.ready ? Math.round(Pipewire.defaultAudioSink.volume * 100) + "%" : "--"
+            text: {
+              if (!Pipewire.ready || !Pipewire.defaultAudioSink) return "--"
+              var vol = Pipewire.defaultAudioSink.volume
+              if (isNaN(vol)) return "--"
+              return Math.round(vol * 100) + "%"
+            }
           }
 
           Text {
@@ -135,7 +135,11 @@ in {
             font.family: fontName
             font.pixelSize: fontSize
             color: "#ffffff"
-            text: UPower.displayDevice.percentage + "%"
+            text: {
+              var pct = UPower.displayDevice.percentage
+              if (isNaN(pct)) return "--"
+              return Math.round(pct) + "%"
+            }
           }
         }
       }

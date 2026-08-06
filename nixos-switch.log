@@ -7,33 +7,16 @@ evaluation warning: The default value of `xdg.userDirs.setSessionVariables` has 
                       xdg.userDirs.setSessionVariables = true;
                     To adopt the new default behavior, set:
                       xdg.userDirs.setSessionVariables = false;
-evaluation warning: thirst profile: The option `services.vicinae.systemd.environment' defined in `/nix/store/hc1y1nmzh2pp1ckc8vb128rpgi9sbpga-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.environment'.
-evaluation warning: thirst profile: The option `services.vicinae.systemd.autoStart' defined in `/nix/store/hc1y1nmzh2pp1ckc8vb128rpgi9sbpga-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.autoStart'.
-evaluation warning: thirst profile: The option `services.vicinae.systemd.enable' defined in `/nix/store/hc1y1nmzh2pp1ckc8vb128rpgi9sbpga-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.enable'.
-evaluation warning: thirst profile: The option `services.vicinae.enable' defined in `/nix/store/hc1y1nmzh2pp1ckc8vb128rpgi9sbpga-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.enable'.
-evaluation warning: thirst profile: The option `programs.kitty.theme' defined in `/nix/store/hc1y1nmzh2pp1ckc8vb128rpgi9sbpga-source/modules/home/kitty.nix' has been changed to `programs.kitty.themeFile' that has a different type. Please read `programs.kitty.themeFile' documentation and update your configuration accordingly.
+evaluation warning: thirst profile: The option `services.vicinae.systemd.environment' defined in `/nix/store/iyk7v4xkw6cda4awx7v5d8h5mjb4chpw-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.environment'.
+evaluation warning: thirst profile: The option `services.vicinae.systemd.autoStart' defined in `/nix/store/iyk7v4xkw6cda4awx7v5d8h5mjb4chpw-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.autoStart'.
+evaluation warning: thirst profile: The option `services.vicinae.systemd.enable' defined in `/nix/store/iyk7v4xkw6cda4awx7v5d8h5mjb4chpw-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.systemd.enable'.
+evaluation warning: thirst profile: The option `services.vicinae.enable' defined in `/nix/store/iyk7v4xkw6cda4awx7v5d8h5mjb4chpw-source/modules/home/vicinae.nix' has been renamed to `programs.vicinae.enable'.
+evaluation warning: thirst profile: The option `programs.kitty.theme' defined in `/nix/store/iyk7v4xkw6cda4awx7v5d8h5mjb4chpw-source/modules/home/kitty.nix' has been changed to `programs.kitty.themeFile' that has a different type. Please read `programs.kitty.themeFile' documentation and update your configuration accordingly.
 evaluation warning: thirst profile: Relying on `home.pointerCursor` to enable cursor config generation is deprecated.
                     Please update your configuration to explicitly set:
 
                       home.pointerCursor.enable = true;
 evaluation warning: nixfmt-rfc-style is now the same as pkgs.nixfmt which should be used instead.
-these 8 derivations will be built:
-  /nix/store/an8xlp8l625sbpmrkz5n4xkkajcav55x-hm_quickshellshell.qml.drv
-  /nix/store/76qwy6c3rzynam9mr5yxf8vji3n71nzk-home-manager-files.drv
-  /nix/store/904vwld0arcm74204jgihnqirzd05qmb-home-manager-generation.drv
-  /nix/store/va29yhh6454rrs6bd9ivkq4kw0ikir88-unit-home-manager-thirst.service.drv
-  /nix/store/i10qzh576ry59jm03swdnhn2jwfs0sj8-system-units.drv
-  /nix/store/4mwfkb1ypgwcvp49cl7pgj1k73nbfcx0-etc.drv
-  /nix/store/0l5ph3hnq8vk61z3fazch49r9vaxn6wp-activate.drv
-  /nix/store/320w9gvbhqpqjxl4v22wvj049simcmb3-nixos-system-thinkpad-26.11.20260804.e72e4f2.drv
-building '/nix/store/an8xlp8l625sbpmrkz5n4xkkajcav55x-hm_quickshellshell.qml.drv'...
-building '/nix/store/76qwy6c3rzynam9mr5yxf8vji3n71nzk-home-manager-files.drv'...
-building '/nix/store/904vwld0arcm74204jgihnqirzd05qmb-home-manager-generation.drv'...
-building '/nix/store/va29yhh6454rrs6bd9ivkq4kw0ikir88-unit-home-manager-thirst.service.drv'...
-building '/nix/store/i10qzh576ry59jm03swdnhn2jwfs0sj8-system-units.drv'...
-building '/nix/store/4mwfkb1ypgwcvp49cl7pgj1k73nbfcx0-etc.drv'...
-building '/nix/store/0l5ph3hnq8vk61z3fazch49r9vaxn6wp-activate.drv'...
-building '/nix/store/320w9gvbhqpqjxl4v22wvj049simcmb3-nixos-system-thinkpad-26.11.20260804.e72e4f2.drv'...
 Checking switch inhibitors... done
 updating GRUB 2 menu...
 activating the configuration...
@@ -43,4 +26,4 @@ restarting the following user units: nixos-activation.service
 restarting sysinit-reactivation.target
 restarting the following units: home-manager-thirst.service
 the following new units were started: NetworkManager-dispatcher.service
-Done. The new configuration is /nix/store/kgp4mb0b7zhd7dhkwf0rdxh1hyvpm3p7-nixos-system-thinkpad-26.11.20260804.e72e4f2
+Done. The new configuration is /nix/store/d5nx4qxm3vvcbyvzh6kncvgpnmlh3iad-nixos-system-thinkpad-26.11.20260804.e72e4f2
