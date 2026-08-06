@@ -5,7 +5,7 @@
     installPhase = ''
       mkdir -p $out/share/sddm/themes/custom
       cp -r $src/* $out/share/sddm/themes/custom/
-      cp ${../../assets/Wallpaper1.jpg} $out/share/sddm/themes/custom/background.jpg
+      cp ${../../assets/Wallpaper2.jpg} $out/share/sddm/themes/custom/background.jpg
     '';
   };
 in {

@@ -19,7 +19,7 @@
         "waybar"
         "hypridle"
         "mako"
-        "${pkgs.swaybg}/bin/swaybg -i ${./../../assets/Wallpaper1.jpg}"
+        "${pkgs.swaybg}/bin/swaybg -i ${./../../assets/Wallpaper2.jpg}"
       ];
 
       bind = [
