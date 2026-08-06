@@ -1,4 +1,7 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  brightnessPath = "/sys/class/backlight/intel_backlight/brightness";
+  maxBrightnessPath = "/sys/class/backlight/intel_backlight/max_brightness";
+in {
   home.packages = [pkgs.quickshell];
 
   xdg.configFile = {
@@ -21,20 +24,22 @@
         property string fontName: "JetBrainsMonoNL Nerd Font"
         property int fontSize: 13
 
-        property real brightnessValue: 0
-        property real brightnessMax: 19393
+        property int brightnessPercent: 0
 
-        function refreshBrightness() {
-          var xhr = new XMLHttpRequest()
-          xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-              if (xhr.status === 200) {
-                brightnessValue = (parseInt(xhr.responseText.trim()) / brightnessMax) * 100
-              }
+        function updateBrightness() {
+          var brightnessFile = Qt.createQmlObject('import QtQuick 2.0; TextFile {}', this)
+          var maxFile = Qt.createQmlObject('import QtQuick 2.0; TextFile {}', this)
+          try {
+            brightnessFile.source = "file://${brightnessPath}"
+            maxFile.source = "file://${maxBrightnessPath}"
+            var b = parseInt(brightnessFile.text)
+            var m = parseInt(maxFile.text)
+            if (!isNaN(b) && !isNaN(m) && m > 0) {
+              brightnessPercent = Math.round((b / m) * 100)
             }
-          }
-          xhr.open("GET", "file:///sys/class/backlight/intel_backlight/brightness")
-          xhr.send()
+          } catch (e) {}
+          brightnessFile.destroy()
+          maxFile.destroy()
         }
 
         Timer {
@@ -42,7 +47,7 @@
           repeat: true
           running: true
           triggeredOnStart: true
-          onTriggered: refreshBrightness()
+          onTriggered: updateBrightness()
         }
 
         Row {
@@ -116,21 +121,21 @@
             font.family: fontName
             font.pixelSize: fontSize
             color: "#ffffff"
-            text: Math.round(Pipewire.defaultAudioSink.volume * 100) + "%"
+            text: Pipewire.ready ? Math.round(Pipewire.defaultAudioSink.volume * 100) + "%" : "--"
           }
 
           Text {
             font.family: fontName
             font.pixelSize: fontSize
             color: "#ffffff"
-            text: Math.round(brightnessValue) + "%"
+            text: brightnessPercent + "%"
           }
 
           Text {
             font.family: fontName
             font.pixelSize: fontSize
             color: "#ffffff"
-            text: Math.round(UPower.displayDevice.percentage * 100) + "%"
+            text: UPower.displayDevice.percentage + "%"
           }
         }
       }
