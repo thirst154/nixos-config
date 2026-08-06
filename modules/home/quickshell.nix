@@ -3,10 +3,10 @@
 
   xdg.configFile = {
     "quickshell/shell.qml".text = ''
-      import QtQuick 2.15
-      import Quickshell 1.0
-      import Quickshell.Hyprland 1.0
-      import Quickshell.Services 1.0
+      import QtQuick
+      import Quickshell
+      import Quickshell.Hyprland
+      import Quickshell.Services
 
       PanelWindow {
         anchors {
