@@ -16,7 +16,7 @@
       ];
 
       exec-once = [
-        "quickshell"
+        "waybar"
         "hypridle"
         "mako"
         "${pkgs.swaybg}/bin/swaybg -i ${./../../assets/Wallpaper2.jpg}"

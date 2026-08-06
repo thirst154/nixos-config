@@ -11,7 +11,7 @@
     ./hyprland.nix
     ./mako.nix
     ./wofi.nix
-    ./quickshell.nix
+    ./waybar.nix
     ./hyprlock.nix
     ./vicinae.nix
   ];
