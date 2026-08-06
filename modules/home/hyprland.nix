@@ -7,7 +7,7 @@
       monitor = [",preferred,auto,1"];
 
       "$mainMod" = "SUPER";
-      "$terminal" = "ghostty";
+      "$terminal" = "kitty";
       "$fileManager" = "nautilus";
 
       env = [
@@ -16,7 +16,7 @@
       ];
 
       exec-once = [
-        "waybar"
+        "quickshell"
         "hypridle"
         "mako"
         "${pkgs.swaybg}/bin/swaybg -i ${./../../assets/Wallpaper2.jpg}"

@@ -5,13 +5,13 @@
 }: {
   imports = [
     ./shell.nix
-    ./ghostty.nix
+    ./kitty.nix
     ./git.nix
     ./gtk.nix
     ./hyprland.nix
     ./mako.nix
     ./wofi.nix
-    ./waybar.nix
+    ./quickshell.nix
     ./hyprlock.nix
     ./vicinae.nix
   ];

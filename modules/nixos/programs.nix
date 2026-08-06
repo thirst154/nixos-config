@@ -27,7 +27,6 @@ in {
     gh
     neovim
     helium-fixed
-    inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
     zed-editor
     localsend
     transmission_4-gtk
