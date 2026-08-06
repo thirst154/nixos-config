@@ -3,7 +3,8 @@
     enable = true;
     settings = {
       anchor = "top-right";
-      font = "JetBrainsMonoNL Nerd Font 12";
+      font = "JetBrainsMonoNL Nerd Font 10";
+      format = "<b>%s</b> %b";
       background-color = "#1E1E1EF2";
       text-color = "#FFFFFF";
       border-color = "#FFFFFF1A";
