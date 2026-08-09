@@ -44,5 +44,4 @@
   };
 
   home.stateVersion = "24.11";
-  wayland.windowManager.hyprland.configType = "lua";
 }
