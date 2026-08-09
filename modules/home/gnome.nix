@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  wallpaper = "file://${./../../assets/Wallpaper2.jpg}";
+  wallpaper = "file://${./../../assets/Wallpaper1.jpg}";
 in {
   home.packages = with pkgs.gnomeExtensions; [
     blur-my-shell
