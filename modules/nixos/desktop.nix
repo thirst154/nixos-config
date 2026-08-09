@@ -34,5 +34,9 @@
     swaybg
     brightnessctl
     nautilus
+
+    grim
+    slurp
+    swappy
   ];
 }

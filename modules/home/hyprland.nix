@@ -80,6 +80,10 @@
         # Brightness
         ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
         ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
+
+        # Screenshotting
+        "$mainMod ALT, 1, exec, grim -g '$(slurp -d)' - | wl-copy"
+        "$mainMod ALT, 2, exec, grim -g '$(slurp)' - | swappy -f -"
       ];
 
       bindl = [
