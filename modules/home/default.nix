@@ -8,6 +8,7 @@
     ./kitty.nix
     ./git.nix
     ./gtk.nix
+    ./gnome.nix
     ./hyprland.nix
     ./mako.nix
     ./wofi.nix
