@@ -16,6 +16,7 @@
       ];
 
       exec-once = [
+        "${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets"
         "waybar"
         "hypridle"
         "mako"
