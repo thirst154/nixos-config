@@ -44,6 +44,10 @@
     gdb
     clang-tools
 
+    # Elixir
+    elixir
+    elixir-ls
+
     # Lua
     lua-language-server
     stylua
