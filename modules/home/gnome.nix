@@ -78,5 +78,9 @@ in {
       switch-to-application-8 = [];
       switch-to-application-9 = [];
     };
+
+    "org/gnome/desktop/interface" = {
+      show-battery-percentage = true;
+    };
   };
 }
