@@ -13,6 +13,6 @@
       confirm_os_window_close = 0;
     };
 
-    theme = "Everforest Dark Hard";
+    themeFile = "everforest_dark_hard";
   };
 }

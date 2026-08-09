@@ -50,7 +50,7 @@
 
     # Nix
     nil
-    nixfmt-rfc-style
+    nixfmt
 
     # TOML
     taplo
