@@ -20,6 +20,11 @@
   boot.initrd.kernelModules = ["i915"];
   boot.kernelModules = ["i915" "mmc_block"];
 
+  boot.plymouth.enable = true;
+  boot.plymouth.theme = "bgrt";
+  boot.kernelParams = ["quiet" "splash" "loglevel=3"];
+  boot.consoleLogLevel = 3;
+
   services.udev.extraRules = ''
     # Disable PCI runtime PM for Genesys GL9750 SD card reader
     SUBSYSTEM=="pci", ATTR{vendor}=="0x17a0", ATTR{device}=="0x9750", ATTR{power/control}="on"
