@@ -34,6 +34,7 @@ in {
     ffmpeg
 
     # AI
+    t3code
     opencode
     tor-browser
     gnome-boxes
