@@ -29,6 +29,7 @@
       la = "eza -la --header --icons";
       vi = "nvim";
       vim = "nvim";
+      zed = "zeditor";
     };
   };
 

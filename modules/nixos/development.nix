@@ -1,4 +1,6 @@
 {pkgs, ...}: {
+  virtualisation.docker.enable = true;
+
   environment.systemPackages = with pkgs; [
     # General development tools
     direnv
