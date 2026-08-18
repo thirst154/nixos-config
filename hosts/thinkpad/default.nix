@@ -55,7 +55,7 @@
 
   users.users.thirst = {
     isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager" "video" "audio" "docker"];
+    extraGroups = ["wheel" "networkmanager" "video" "audio" "docker" "libvirtd"];
     shell = pkgs.zsh;
   };
 

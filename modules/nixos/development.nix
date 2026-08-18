@@ -1,6 +1,9 @@
 {pkgs, ...}: {
   virtualisation.docker.enable = true;
 
+  # KVM/libvirt backend for GNOME Boxes
+  virtualisation.libvirtd.enable = true;
+
   environment.systemPackages = with pkgs; [
     # General development tools
     direnv
