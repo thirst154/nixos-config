@@ -62,6 +62,7 @@
   users.users.thirst = {
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager" "video" "audio" "docker" "libvirtd" "plugdev"];
+    description = "Thomas Hirst";
     shell = pkgs.zsh;
   };
 
