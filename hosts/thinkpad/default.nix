@@ -53,6 +53,10 @@
   security.pam.services.sudo.fprintAuth = true;
   security.pam.services.gdm.fprintAuth = true;
 
+  environment.systemPackages = with pkgs; [
+    fprintd
+  ];
+
   users.users.thirst = {
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager" "video" "audio" "docker" "libvirtd"];
