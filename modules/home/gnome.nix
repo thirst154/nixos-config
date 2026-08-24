@@ -55,12 +55,12 @@
     };
 
     "org/gnome/desktop/background" = {
-      picture-uri = "file:///home/thirst/nixos-config/assets/Wallpaper2.jpg";
-      picture-uri-dark = "file:///home/thirst/nixos-config/assets/Wallpaper2.jpg";
+      picture-uri = "file:///home/thirst/nixos-config/assets/light1.jpg";
+      picture-uri-dark = "file:///home/thirst/nixos-config/assets/dark.jpg";
     };
 
     "org/gnome/desktop/screensaver" = {
-      picture-uri = "file:///home/thirst/nixos-config/assets/Wallpaper2.jpg";
+      picture-uri = "file:///home/thirst/nixos-config/assets/dark.jpg";
     };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
