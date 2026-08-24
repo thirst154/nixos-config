@@ -54,6 +54,11 @@
       show-battery-percentage = true;
     };
 
+    "org/gnome/desktop/default-applications/terminal" = {
+      exec = "kitty";
+      exec-arg = "-e";
+    };
+
     "org/gnome/desktop/background" = {
       picture-uri = "file:///home/thirst/nixos-config/assets/light1.jpg";
       picture-uri-dark = "file:///home/thirst/nixos-config/assets/dark.jpg";
