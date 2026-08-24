@@ -64,5 +64,10 @@
       command = "kitty";
       binding = "<Super>Return";
     };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+      name = "Open Files";
+      command = "nautilus";
+      binding = "<Super>E";
+    };
   };
 }
