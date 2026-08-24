@@ -30,6 +30,7 @@
       vi = "nvim";
       vim = "nvim";
       zed = "zeditor";
+      oc = "opencode";
     };
   };
 
