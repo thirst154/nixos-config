@@ -51,6 +51,7 @@
 
     "org/gnome/desktop/interface" = {
       text-scaling-factor = 1.0;
+      show-battery-percentage = true;
     };
 
     "org/gnome/desktop/background" = {
