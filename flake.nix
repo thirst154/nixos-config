@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    vicinae.url = "github:vicinaehq/vicinae";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +23,6 @@
     self,
     nixpkgs,
     home-manager,
-    vicinae,
     alejandra,
     helium,
     ...
@@ -40,12 +38,10 @@
         modules = [
           ({...}: {
             nixpkgs.overlays = [
-              (import ./overlays/glaze-fix.nix)
             ];
           })
           ./hosts/thinkpad/default.nix
           home-manager.nixosModules.home-manager
-          vicinae.nixosModules.default
           {
             environment.systemPackages = [alejandra.packages.${system}.default];
           }
@@ -57,7 +53,6 @@
             home-manager.extraSpecialArgs = {inherit inputs;};
             home-manager.sharedModules = [
               {home.enableNixpkgsReleaseCheck = false;}
-              vicinae.homeManagerModules.default
             ];
           }
         ];

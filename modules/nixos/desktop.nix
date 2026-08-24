@@ -3,11 +3,6 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
   xdg.portal = {
     enable = true;
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
@@ -28,17 +23,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    wl-clipboard
-    xdg-utils
-    pavucontrol
-    networkmanagerapplet
-
-    swaybg
-    brightnessctl
-    nautilus
-
-    grim
-    slurp
-    swappy
+    kitty
   ];
 }

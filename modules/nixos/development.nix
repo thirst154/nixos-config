@@ -13,13 +13,8 @@
     htop
     tree
 
-    # Infra as code application
-    pulumi-bin
-
     # Python
     python3
-    uv
-    ruff
     pyright
 
     # JavaScript / TypeScript
@@ -83,17 +78,6 @@
     # Cloudflare
     wrangler
 
-    # Google Cloud
-    google-cloud-sdk
-
-    # Ebitengine dependencies (graphics & audio libraries)
-    libX11
-    mesa
-    libXcursor
-    libXi
-    libXinerama
-    libXrandr
-    libXxf86vm
     alsa-lib
   ];
 

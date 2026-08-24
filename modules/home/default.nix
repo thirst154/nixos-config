@@ -5,16 +5,9 @@
 }: {
   imports = [
     ./shell.nix
-    ./kitty.nix
     ./git.nix
     ./gtk.nix
     ./gnome.nix
-    ./hyprland.nix
-    ./mako.nix
-    ./wofi.nix
-    ./waybar.nix
-    ./hyprlock.nix
-    ./vicinae.nix
   ];
 
   home.pointerCursor = {
