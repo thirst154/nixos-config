@@ -8,6 +8,7 @@
     ./git.nix
     ./gtk.nix
     ./gnome.nix
+    ./kitty.nix
   ];
 
   home.pointerCursor = {
