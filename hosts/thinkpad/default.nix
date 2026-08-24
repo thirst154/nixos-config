@@ -28,6 +28,8 @@
   services.udev.extraRules = ''
     # Disable PCI runtime PM for Genesys GL9750 SD card reader
     SUBSYSTEM=="pci", ATTR{vendor}=="0x17a0", ATTR{device}=="0x9750", ATTR{power/control}="on"
+    # Synaptics fingerprint reader
+    SUBSYSTEM=="usb", ATTR{idVendor}=="06cb", ATTR{idProduct}=="00bd", MODE="0664", GROUP="plugdev"
   '';
 
   boot.loader.systemd-boot.enable = false;
@@ -59,7 +61,7 @@
 
   users.users.thirst = {
     isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager" "video" "audio" "docker" "libvirtd"];
+    extraGroups = ["wheel" "networkmanager" "video" "audio" "docker" "libvirtd" "plugdev"];
     shell = pkgs.zsh;
   };
 
