@@ -11,6 +11,7 @@
       background_opacity = "0.8";
       enable_audio_bell = false;
       confirm_os_window_close = 0;
+      hide_window_decorations = "yes";
     };
 
     themeFile = "vague";

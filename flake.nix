@@ -38,6 +38,11 @@
         modules = [
           ({...}: {
             nixpkgs.overlays = [
+              (final: prev: {
+                gnome-control-center = prev.gnome-control-center.overrideAttrs (old: {
+                  buildInputs = old.buildInputs ++ [prev.libfprint];
+                });
+              })
             ];
           })
           ./hosts/thinkpad/default.nix

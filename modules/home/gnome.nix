@@ -52,6 +52,8 @@
     "org/gnome/desktop/interface" = {
       text-scaling-factor = 1.0;
       show-battery-percentage = true;
+      gtk-theme = "WhiteSur-Dark";
+      color-scheme = "prefer-dark";
     };
 
     "org/gnome/desktop/default-applications/terminal" = {

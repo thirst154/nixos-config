@@ -1,6 +1,10 @@
 {pkgs, ...}: {
   gtk = {
     enable = true;
+    theme = {
+      package = pkgs.whitesur-gtk-theme;
+      name = "WhiteSur-Dark";
+    };
     font = {
       package = pkgs.adwaita-fonts;
       name = "Adwaita Sans 11";
