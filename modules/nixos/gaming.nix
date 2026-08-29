@@ -15,7 +15,7 @@
 
   environment.systemPackages = with pkgs; [
     atlauncher
-    modrinth-app
+    ftb-app
     prismlauncher
     jdk8
     jdk17
