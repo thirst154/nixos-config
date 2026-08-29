@@ -16,6 +16,7 @@
   environment.systemPackages = with pkgs; [
     atlauncher
     prismlauncher
+    jdk8
     jdk17
     jdk21
   ];
