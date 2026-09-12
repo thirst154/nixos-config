@@ -8,14 +8,6 @@
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
-  # Hint Electron apps to use Wayland natively
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
