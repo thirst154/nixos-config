@@ -22,6 +22,8 @@ in {
     vscode
     gh
     neovim
+    emacs
+    kakoune
     helium-fixed
     zed-editor
     localsend
