@@ -48,6 +48,9 @@
   services.tlp.enable = true;
   services.power-profiles-daemon.enable = false;
 
+  # Firmware updates (BIOS/Thunderbolt/fingerprint) via LVFS
+  services.fwupd.enable = true;
+
   programs.zsh.enable = true;
   programs.gnupg.agent.enable = true;
 
@@ -61,7 +64,9 @@
 
   users.users.thirst = {
     isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager" "video" "audio" "docker" "libvirtd" "plugdev"];
+    # "docker" is root-equivalent (deliberate dev tradeoff);
+    # "scanner"/"lp" are for SANE scanning and CUPS printing
+    extraGroups = ["wheel" "networkmanager" "video" "audio" "docker" "libvirtd" "plugdev" "scanner" "lp"];
     description = "Thomas Hirst";
     shell = pkgs.zsh;
   };

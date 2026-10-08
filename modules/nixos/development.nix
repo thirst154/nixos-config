@@ -12,6 +12,7 @@
     jq
     htop
     tree
+    tree-sitter
 
     # Python
     python3
@@ -34,6 +35,11 @@
     gopls
     gofumpt
     delve
+    golangci-lint
+    gotools
+    gomodifytags
+    impl
+    gosec
 
     # C / C++
     gcc
@@ -71,6 +77,10 @@
 
     # YAML
     yaml-language-server
+
+    # Database / API
+    dbeaver-bin
+    bruno
 
     # Other
     actionlint

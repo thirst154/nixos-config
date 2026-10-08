@@ -9,6 +9,7 @@
     ./gtk.nix
     ./gnome.nix
     ./kitty.nix
+    ./opencode.nix
   ];
 
   home.pointerCursor = {

@@ -8,12 +8,15 @@
     };
 
     settings = {
-      background_opacity = "0.6";
       enable_audio_bell = false;
       confirm_os_window_close = 0;
       hide_window_decorations = "yes";
     };
 
-    themeFile = "vague";
+    # Custom USGC-RETICLE theme (converted from the iTerm/sublime usgc-themes)
+    extraConfig = "include themes/USGC-RETICLE-KT.conf";
   };
+
+  xdg.configFile."kitty/themes/USGC-RETICLE-KT.conf".source =
+    ./themes/usgc-reticle/kitty.conf;
 }

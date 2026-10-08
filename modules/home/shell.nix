@@ -17,6 +17,11 @@
         *":$PNPM_HOME:") ;;
         *) export PATH="$PNPM_HOME:$PATH" ;;
       esac
+
+      # TR-100 Machine Report, only when in interactive mode
+      if [[ -o interactive ]]; then
+        ${pkgs.bash}/bin/bash ${./scripts/machine_report.sh}
+      fi
     '';
 
     sessionVariables = {
@@ -45,6 +50,6 @@
   home.sessionPath = [
     "$HOME/.opencode/bin"
     "$HOME/.local/bin"
-    "/usr/local/go/bin"
+    "$HOME/go/bin" # where `go install` puts binaries
   ];
 }

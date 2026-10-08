@@ -2,8 +2,7 @@
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
+    # Dedicated-server and LAN-transfer ports intentionally left closed (laptop)
   };
 
   programs.gamemode.enable = true;

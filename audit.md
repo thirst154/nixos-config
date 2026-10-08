@@ -1,321 +1,192 @@
-# NixOS Configuration Audit Report
+# NixOS Config Audit — thinkpad
 
-## Audit Scope
-- **Flake**: `/home/thirst/nixos-config/flake.nix` and dependencies
-- **Host**: `hosts/thinkpad/`
-- **System modules**: `modules/nixos/`
-- **Home modules**: `modules/home/`
-- **Helper scripts**: `rebuild.sh`, `update.sh`, `clean.sh`
-- **Assets**: `assets/`
+Date: 2026-09-28
+Scope: Full review of the flake for a Go + TypeScript dev laptop with everyday use (email, PDF, documents).
+Mode: **Report only** — nothing in the config has been changed.
 
 ---
 
-## Critical Issues
+## 1. Executive summary
 
-### 1. Docker Daemon Not Enabled Despite User in `docker` Group
-**File**: `modules/nixos/development.nix`, `hosts/thinkpad/default.nix`  
-`thirst` is added to the `docker` group, but `virtualisation.docker.enable = true` is never declared in any system module. If Docker is enabled manually later, `thirst` gains root-equivalent access without explicit daemon configuration. If it is never enabled, the group membership is misleading and may cause confusion.
+| # | Severity | Finding | Effort to fix |
+|---|----------|---------|---------------|
+| S1 | **High** | No disk encryption (root **and** swap are plaintext) | Reinstall / re-image |
+| S2 | **High** | `fwupd` not enabled — ThinkPad firmware/BIOS never updated via LVFS | 2 lines |
+| S3 | Medium | Steam opens more firewall ports than a laptop needs | 2 lines |
+| S4 | Medium | Helium browser depends on a small third-party flake for security patches | Ongoing vigilance |
+| S5 | Low | No automatic system updates — patching is fully manual | 4 lines (optional) |
+| S6 | Low | `docker` group + `trusted-users` = intentional root-equivalence, undocumented | Comment only |
+| P1 | — | No email client (want: Proton Mail Bridge + client) | 2 packages |
+| P2 | — | No printing or scanner backend (CUPS/SANE) | 3 lines |
+| P3 | — | No password manager (want: Proton Pass) | 1 package |
+| P4 | — | Go linting toolchain incomplete | 4 packages |
+| P5 | — | No database GUI, no API client | 2 packages |
+| Q1 | — | Dead PATH entry `/usr/local/go/bin` (should be `~/go/bin`) | 1 line |
+| Q2 | — | `openldap` test-disabling overlay is undocumented | Comment only |
 
-**Recommendation**: Explicitly enable or disable Docker:
+**Status (2026-09-28):** S2, S3, S5, S6, P1–P5, Q1 and Q2 have been **fixed** in the config (verified with `nixos-rebuild build`). Still open: **S1** (disk encryption — needs reinstall) and **S4** (Helium supply-chain vigilance, ongoing).
+
+Details below.
+
+---
+
+## 2. Security findings
+
+### S1 — No full-disk encryption (High)
+
+**Evidence:** `hosts/thinkpad/hardware-configuration.nix` mounts `/` as raw `ext4` directly on a by-uuid device; there is no LUKS (`/dev/mapper/...`) anywhere. Swap is also a raw partition (`nvme0n1p3`, 8.8 GB, confirmed live via `swapon --show`).
+
+**Impact:** This is a laptop. If it's lost or stolen, anyone can boot from USB and read everything: SSH keys, GPG keys, browser sessions, Proton credentials, source code, the GNOME keyring (which is only as strong as the login password, and readable offline), and anything that ever swapped to disk.
+
+**Recommendation:**
+
+- The clean fix is a reinstall with LUKS2 (ideally with TPM2 or FIDO2 unlock — a ThinkPad fingerprint reader can also unlock LUKS via `fprintd` + TPM, though TPM2-totp/systemd-cryptenroll is the common route). This cannot be fixed by editing the flake alone; it needs a re-image. Take a full backup first.
+- If a reinstall is not palatable soon, interim mitigations: ensure the GNOME keyring auto-locks on suspend (default), keep the swap usage low, and treat physical access as game-over.
+- Optional at reinstall time: Secure Boot via [lanzaboote](https://github.com/nix-community/lanzaboote) for boot-chain integrity.
+
+### S2 — `fwupd` not enabled (High)
+
+**Evidence:** no `services.fwupd` in any module; `systemctl is-enabled fwupd.service` → `not-found`.
+
+**Impact:** ThinkPads get regular firmware updates through LVFS — including security fixes for BIOS/UEFI, Thunderbolt, and the fingerprint reader you rely on. Right now none of them can ever be applied from NixOS.
+
+**Fix (2 lines in `hosts/thinkpad/default.nix`):**
+
 ```nix
-virtualisation.docker.enable = true;
-# OR remove the user from the docker group
+services.fwupd.enable = true;
 ```
 
-**Status**: **FIXED** — Removed `docker` group from user and removed `docker`/`docker-compose` packages.
+### S3 — Steam firewall openings are too broad (Medium)
 
----
+**Evidence:** `modules/nixos/gaming.nix` sets all three of:
 
-### 2. Hyprlock Wallpaper Path Mismatch
-**File**: `modules/home/hyprlock.nix`  
-The config references `/home/thirst/nixos-config/assets/Wallpaper1.jpeg`, but the repository contains `Wallpaper1.jpg` and `Wallpaper.jpeg` — **no file named `Wallpaper1.jpeg` exists**.
-
-**Impact**: Hyprlock will fail to load the wallpaper, potentially falling back to a blank or solid-color background.
-
-**Recommendation**: Align the path with an existing file:
 ```nix
-path = /home/thirst/nixos-config/assets/Wallpaper1.jpg;
-# or
-path = /home/thirst/nixos-config/assets/Wallpaper.jpeg;
+remotePlay.openFirewall = true;            # UDP 27031–27036
+dedicatedServer.openFirewall = true;       # TCP/UDP 27015+
+localNetworkGameTransfers.openFirewall = true;  # TCP/UDP 27040–27041
 ```
 
-**Status**: **FIXED** — Changed path to `Wallpaper1.jpg`.
+**Impact:** The default NixOS firewall is enabled (verified live), which is good — but these options punch holes in it on *every* network you join (café Wi-Fi included). Running a dedicated server listener on a laptop is almost never intended.
+
+**Recommendation:** keep `remotePlay` only if you actually stream games; drop `dedicatedServer.openFirewall` and `localNetworkGameTransfers.openFirewall` unless you host LAN games. If you want LAN play occasionally, toggle it per-session instead.
+
+**Related (functional, not security):**
+
+- **LocalSend** is installed as a bare package — its port (TCP/UDP 53317) is closed by the firewall, so receiving files will fail. Prefer the module: `programs.localsend.enable = true; programs.localsend.openFirewall = true;`
+- **Transmission** has no inbound port open (51413); downloads still work but swarm connectivity is poor. Open it only if you want better seeding.
+
+### S4 — Helium browser supply-chain risk (Medium)
+
+**Evidence:** `flake.nix` pins `helium` to `github:schembriaiden/helium-browser-nix-flake`; `modules/nixos/programs.nix` patches its flags and it's the default browser (mimeapps in `modules/home/default.nix`).
+
+**Impact:** Your *default browser* — the highest-value attack surface on the machine — comes from a small community flake, not from nixpkgs. Security patches for Chromium land constantly; you're trusting one maintainer's cadence and integrity for all of them. The `follows = "nixpkgs"` wiring is correct, but that only pins the toolchain, not the browser source.
+
+**Recommendation:**
+
+- Check how quickly the flake tracks upstream Helium/Chromium releases; if it lags, treat that as a real exposure.
+- Consider a nixpkgs-maintained fallback (Firefox or `ungoogled-chromium`) for banking/sensitive accounts, or as the default if Helium ever falls behind. `tor-browser` is already installed and is also fine as an isolated secondary.
+
+### S5 — No automatic system updates (Low)
+
+**Evidence:** no `system.autoUpgrade` anywhere; updates are manual via `./update.sh` + `./rebuild.sh`.
+
+**Impact:** nixos-unstable moves fast; gaps between manual updates mean running with known-vulnerable packages. This is a common and defensible choice (you review diffs), but be aware of the tradeoff.
+
+**Options:** keep manual but set a weekly habit; or `system.autoUpgrade.enable = true; system.autoUpgrade.flake = "github:you/nixos-config";` with `allowReboot = false`. Given the generation-per-commit workflow in `rebuild.sh`, manual-with-habit fits this repo best.
+
+### S6 — Intentional root-equivalence, undocumented (Low)
+
+**Evidence:**
+
+- `users.users.thirst.extraGroups` includes `docker` (`hosts/thinkpad/default.nix`) — anyone in this group is effectively root (`docker run -v /:/host ...`).
+- `nix.settings.trusted-users = ["root" "thirst"]` (`modules/nixos/core.nix`) — lets your user add binary-cache substituters and (combined with other nix options) escalate.
+
+**Impact:** Standard, sensible choices for a single-user dev box, but they mean *any* process running as `thirst` (a malicious `npm postinstall`, a compromised dev dependency) is one command away from root.
+
+**Recommendation:** no change needed — add a comment in each file noting it's a deliberate tradeoff. If you ever want to reduce it, rootless docker or `podman` with `dockerCompat` is the path.
+
+### Minor security notes
+
+- **Git commit signing:** `programs.gnupg.agent.enable = true` but `modules/home/git.nix` has no `signing` config. For a dev machine pushing to GitHub, signing commits (GPG or SSH — GitHub accepts SSH signing and you likely have a key already) is a cheap win.
+- **Screen lock:** no explicit dconf lock settings; GNOME defaults (blank + lock) apply. Consider pinning them in `modules/home/gnome.nix` (`org/gnome/desktop/session` `idle-delay`, `org/gnome/desktop/screensaver` `lock-enabled`) so a GNOME default change can't silently weaken it.
+- **`openldap` overlay** (`modules/nixos/core.nix`) disables the package's test suite with no comment. It's presumably a build-failure workaround — document why, with the error it avoids, so future-you knows when it's safe to delete.
+- **SSH server:** not enabled — good, no action.
+- **Firewall default:** enabled (verified live) — good.
 
 ---
 
-### 3. Vicinae Server Double-Started
-**File**: `modules/home/hyprland.nix`, `modules/home/vicinae.nix`  
-- `hyprland.nix` has `exec-once = [ ... "vicinae server" ... ]`
-- `vicinae.nix` has `services.vicinae.systemd.autoStart = true`
+## 3. Missing packages & features
 
-This causes the clipboard daemon to be launched twice on login, wasting resources and potentially causing race conditions or port conflicts.
+Filtered by your answers: email = Proton Bridge + client; office = web-only; extras = printing/scanning + Proton Pass; dev = Go linting, DB GUI, API client.
 
-**Recommendation**: Remove `"vicinae server"` from `hyprland.nix` and let the systemd service handle it.
+### Everyday
 
-**Status**: **FIXED** — Removed `"vicinae server"` from `exec-once`.
+| Want | Recommendation | Notes |
+|------|----------------|-------|
+| Proton Mail | `protonmail-bridge` + `thunderbird` | Bridge is the officially supported IMAP/SMTP bridge; **Thunderbird is the client Proton documents and tests against** (Geary works but is fiddly with Bridge's local certs). Put both in `modules/nixos/programs.nix`; Bridge runs as a user service — start it once via `systemctl --user` or just launch it and let it autostart. |
+| Passwords | `proton-pass` | Desktop app exists in your pinned nixpkgs (v1.40.2). Browser extension inside Helium is also worth having. |
+| Printing | `services.printing.enable = true;` + `services.avahi.enable = true; services.avahi.nssmdns4 = true;` | CUPS + mDNS = driverless discovery of network printers. Add `services.ipp-usb.enable = true;` for modern USB printers. |
+| Scanning | `hardware.sane.enable = true;` | `simple-scan` is **already installed** (verified on the live system) but useless without the SANE backend. Add `sane-backends` support and the user is already in the right groups. |
+| PDF | — | **Covered already**: `papers` (GNOME's document viewer) is installed via GNOME core utilities. No action needed. |
+| Office docs | — | Per your choice: web-only. Note that `.docx`/`.xlsx` attachments can't be previewed offline without a suite — Nautilus will offer "open in browser". If that ever annoys you, `libreoffice-fresh` is one line. |
 
----
+### Dev (Go + TS)
 
-### 4. GPG Agent Enabled Without Pinentry
-**File**: `hosts/thinkpad/default.nix`  
-`programs.gnupg.agent.enable = true` is set, but no `pinentry` package is configured. On a Wayland desktop, the GPG agent cannot prompt for passphrases without a compatible pinentry (e.g., `pinentry-qt` or `pinentry-curses`).
+| Gap | Recommendation | Notes |
+|-----|----------------|-------|
+| Go linting | `golangci-lint`, `gotools`, `gomodifytags`, `impl`, `gosec` | You have `gopls`/`gofumpt`/`delve` but no linter — `golangci-lint` is the de-facto standard and most Go repos' CI runs it. `gotools` gives `goimports` etc.; `gomodifytags`/`impl` are the editor helpers gopls shells out to. All confirmed present in your pinned nixpkgs. → `modules/nixos/development.nix` |
+| Database GUI | `dbeaver-bin` | Universal (Postgres/MySQL/SQLite/…). `beekeeper-studio` is the lighter alternative. |
+| API client | `bruno` | Offline, stores collections as files in your repo (git-friendly). `insomnia` if you prefer the classic GUI. Both in nixpkgs. |
 
-**Recommendation**: Add `programs.gnupg.agent.pinentryPackage = pkgs.pinentry-qt;` (or `pinentry-gtk2` if preferred).
+**Worth knowing about even though you didn't pick them** (they plug real gaps in the TS setup):
 
----
+- `vscode-langservers-extracted` — you have LSPs for a dozen languages but **no eslint/css/html/json language servers**, the bread-and-butter TS ones. `typescript-language-server` alone doesn't lint.
+- `docker-compose` — docker is enabled but there's no `docker compose` binary; almost every Go/TS repo with a compose file needs it.
+- `programs.nix-ld.enable = true;` — lets unpatched prebuilt binaries (some npm native tools, downloaded linters, vendor CLIs) run on NixOS. A classic day-2 pain point.
 
-### 5. Unpinned Flake Inputs (Supply-Chain Risk)
-**File**: `flake.nix`  
-Several inputs follow the default branch without a tag or revision pin:
+### Workflow suggestion
 
-| Input | Risk |
-|-------|------|
-| `vicinae` | May break API compatibility without warning |
-| `helium` | May change build/install phase, breaking the fragile string-replacement hack |
-| `ghostty` | May introduce new build dependencies or failures |
-| `home-manager` | May introduce breaking changes for unstable |
-
-**Recommendation**: Pin to known-good revisions or tags, or update intentionally via `nix flake lock --update-input <name>`.
-
----
-
-### 6. Aggressive Garbage Collection
-**File**: `modules/nixos/core.nix`  
-`nix.gc.options = "--delete-older-than 14d"` removes all generations older than two weeks. If a recent kernel update or configuration change bricks the system, older safe generations are already gone.
-
-**Recommendation**: Extend to at least 30 days, or rely on `boot.loader.systemd-boot.configurationLimit = 10` for generation capping instead of time-based deletion.
-
-**Status**: **FIXED** — Changed to `--delete-older-than 30d`.
+You already have `direnv` + `nix-direnv`. The idiomatic NixOS setup is **per-project dev shells** (`shell.nix`/`flake.nix` with `mkShell` per repo, auto-loaded by direnv) instead of one global pile of toolchains. Benefits: Go 1.x for one client, Node 20 vs 22 across projects, no version clashes. No rush — but as the global list in `development.nix` grows (it's already 8 toolchains), it starts to bite.
 
 ---
 
-### 7. `rebuild.sh` Does Not Track All Changes
-**File**: `rebuild.sh`  
-- `git diff --quiet '*.nix' 'flake.lock'` ignores changes to `.sh`, `.md`, and asset files.
-- `git add '*.nix' flake.lock` misses new helper scripts, wallpapers, or theme files.
-- If `rebuild.sh` itself is modified, the change is not committed by the script.
+## 4. Config improvements & hygiene
 
-**Recommendation**: Use `git add -A` or explicitly include the asset and script directories.
+1. **Dead PATH entry** — `modules/home/shell.nix` adds `/usr/local/go/bin` to `home.sessionPath`. That path does not exist on NixOS (Go lives in the nix store). What you almost certainly want is `$HOME/go/bin`, which is where `go install` drops binaries:
+   ```nix
+   home.sessionPath = [ "$HOME/.opencode/bin" "$HOME/.local/bin" "$HOME/go/bin" ];
+   ```
+   Without this, anything you `go install` (including tools recommended above) is invisible to your shell.
 
-**Status**: **FIXED** — Changed to `git diff --quiet` (no file filter) and `git add -A`.
+2. **Add `thermald`** — `services.thermald.enable = true;` in `hosts/thinkpad/default.nix`. Intel thermal daemon prevents the CPU from cooking itself before firmware throttling kicks in; standard on ThinkPads alongside TLP (no conflict).
 
----
+3. **Editor bloat** — `programs.nix` installs five editors: vscode, neovim, neovide, emacs, kakoune, zed-editor. Harmless but each pulls big dependency trees into every generation and slows rebuilds. Consider keeping the two you actually use.
 
-### 8. `systemd-boot` Boot Editor Enabled (Local Security)
-**File**: `hosts/thinkpad/default.nix`  
-`boot.loader.systemd-boot.enable = true` does not set `boot.loader.systemd-boot.editor = false`. The default (`true`) allows anyone with physical access to edit kernel parameters at boot, bypassing security controls (e.g., `init=/bin/bash`).
+4. **Three JDKs** (8/17/21) for Minecraft launchers — fine if you play those versions; otherwise `jdk21` alone covers modern launchers. Store cost only.
 
-**Recommendation**: On a laptop, disable the editor:
-```nix
-boot.loader.systemd-boot.editor = false;
-```
+5. **Undocumented overlays** — both overlays (`openldap` test skip, `gnome-control-center` libfprint) lack comments. One line each ("why this exists / when to remove") saves real time later.
 
-**Status**: **FIXED** — `editor = false` added.
+6. **README drift check** — README is currently accurate (firewall note re: localsend/transmission is correct — and this audit agrees it's an issue, see S3). If you apply changes from this audit, update the Features/Notable sections to match.
+
+7. **Minor:** `environment.variables.EDITOR` in `programs.nix` — works, but `environment.sessionVariables` (or HM's `home.sessionVariables.EDITOR`) is the more idiomatic home for it. Cosmetic.
 
 ---
 
-## Medium Issues
+## 5. What's already good
 
-### 9. `docker` Group = Passwordless Root
-**File**: `hosts/thinkpad/default.nix`  
-Membership in the `docker` group is effectively root access. Combined with `trusted-users`, `thirst` has multiple paths to full system control. This is acceptable for a single-user laptop, but it must be a conscious decision, not an oversight.
-
----
-
-### 10. Trusted-User + Third-Party Substituter
-**File**: `modules/nixos/core.nix`  
-`thirst` is a `trusted-user`, and the flake trusts `vicinae.cachix.org`. A compromised Vicinae cache (or a supply-chain attack on the project) could inject malicious binaries that `thirst` (or the Nix daemon) will execute.
-
-**Recommendation**: Re-evaluate whether `vicinae` needs its own binary cache. Remove `extra-substituters` if builds are fast enough.
+- Firewall enabled by default; no SSH server; polkit + keyring wired correctly; PAM fingerprint limited to sudo/GDM.
+- Boot hardening details done right: `/boot` mounted `fmask=0077,dmask=0077`, grub generation limit, microcode updates via `enableRedistributableFirmware`.
+- TLP correctly configured with `power-profiles-daemon` explicitly disabled (they conflict — a very common mistake, avoided).
+- Weekly GC + nightly store optimise + 10-generation boot limit: sane disk hygiene.
+- `home-manager.backupFileExtension` set, state versions deliberately pinned, one `nixpkgs` in the closure via `follows`.
+- GNOME stack is complete: pipewire with wireplumber, portals, gvfs, thumbnails, and core utilities (papers, simple-scan, calculator) all present.
 
 ---
 
-### 11. `helium` Install Phase Is Fragile
-**File**: `modules/nixos/programs.nix`  
-The `helium-fixed` derivation uses `builtins.replaceStrings` on `old.installPhase` to inject Wayland flags. If the upstream `helium` flake changes its install phase even slightly, this will silently break or produce a broken desktop file.
+## 6. Suggested next steps (in order)
 
-**Recommendation**: Contribute the Wayland flags upstream, or use a `makeWrapper` approach in an `overrideAttrs` instead of string surgery.
+1. **Now (pure config, zero risk):** fwupd, thermald, CUPS+avahi+SANE, LocalSend module with `openFirewall`, fix `~/go/bin` PATH, Proton Pass, Proton Mail Bridge + Thunderbird, Go linting packages, dbeaver-bin, bruno, docker-compose, vscode-langservers-extracted.
+2. **This week:** tighten Steam firewall options; decide on Helium's update cadence; set up git commit signing.
+3. **Planned maintenance window:** backup → reinstall with LUKS2 (consider lanzaboote for Secure Boot at the same time).
 
----
-
-### 12. `alejandra` Version Inconsistency
-**File**: `flake.nix`, `rebuild.sh`  
-- The flake inputs pin `alejandra` to `4.0.0`.
-- The formatter uses `nixpkgs.legacyPackages.${system}.alejandra` (whatever version nixpkgs-unstable ships).
-- `rebuild.sh` runs `alejandra` from the user PATH, which could be yet another version.
-
-**Recommendation**: Use the pinned flake input for formatting:
-```nix
-formatter.${system} = inputs.alejandra.packages.${system}.default;
-```
-
----
-
-### 13. `hypridle` Started but Not Configured
-**File**: `modules/home/hyprland.nix`, `modules/home/default.nix`  
-`hypridle` is added to `home.packages` and started in `exec-once`, but there is no `services.hypridle` configuration in Home Manager. The daemon likely runs with no idle rules, meaning **automatic screen lock is never triggered**. This is a security gap for a laptop.
-
-**Recommendation**: Add a `services.hypridle` block or remove the `exec-once` entry and rely on a different idle/lock mechanism.
-
----
-
-### 14. Xwayland Enabled
-**File**: `modules/nixos/desktop.nix`  
-`programs.hyprland.xwayland.enable = true` allows X11 applications to run. This reduces the isolation benefits of Wayland and increases attack surface.
-
-**Recommendation**: If the user does not need X11 apps, set this to `false`. If it is needed, document which apps require it.
-
-**Status**: **NOT FIXED** — User chose not to address this issue.
-
----
-
-### 15. Steam Opens Firewall Ports
-**File**: `modules/nixos/gaming.nix`  
-`programs.steam` opens Remote Play, dedicated server, and LAN transfer ports. This is a broad network exposure for a laptop.
-
-**Recommendation**: Disable the ports that are not actively used:
-```nix
-remotePlay.openFirewall = false;
-dedicatedServer.openFirewall = false;
-localNetworkGameTransfers.openFirewall = false;
-```
-
----
-
-### 16. No Disk Encryption Mentioned
-**File**: `hosts/thinkpad/hardware-configuration.nix`  
-The root filesystem (`/`) is mounted directly from an ext4 partition by UUID. There is no LUKS or `boot.initrd.luks` configuration. On a laptop, this means the data is accessible to anyone with physical access.
-
-**Recommendation**: If this is intentional, document it. Otherwise, consider enabling LUKS encryption.
-
----
-
-### 17. Impure / Mutable Paths in Config
-**File**: `modules/home/shell.nix`, `modules/nixos/development.nix`  
-- `home.sessionPath` includes `"/usr/local/go/bin"` — outside the Nix store.
-- `environment.sessionVariables` includes `RUSTUP_HOME` and `CARGO_HOME` in `$HOME`.
-- `NVM_DIR` is set, but `nvm` is not installed via Nix.
-
-These create hidden state that is not reproducible across reinstalls.
-
-**Recommendation**: Use `pkgs.go`, `pkgs.rustup`, etc. from Nix instead of relying on external installations.
-
----
-
-### 18. `openldap` Tests Disabled via Overlay
-**File**: `modules/nixos/core.nix`  
-`nixpkgs.overlays` disables `openldap` tests (`doCheck = false`). This is a hack that may mask regressions.
-
-**Recommendation**: If the test suite is broken on unstable, report it upstream or use a local package override rather than a global overlay.
-
----
-
-### 19. `clean.sh` Deletes All Generations
-**File**: `clean.sh`  
-`nix-collect-garbage -d` deletes **all** old generations, including the current one. This is destructive and leaves no rollback path.
-
-**Recommendation**: Remove the `-d` flag or warn the user explicitly.
-
-**Status**: **FIXED** — Removed `-d` flag.
-
----
-
-### 20. README vs. Config Mismatch
-**File**: `README.md`, `modules/nixos/desktop.nix`  
-README says "GDM display manager", but `services.displayManager.ly.enable = true` is used.
-
-**Recommendation**: Update README to reflect `ly`.
-
-**Status**: **FIXED** — README updated to say `ly` display manager.
-
----
-
-### 21. `home.stateVersion` Is Future-Dated
-**File**: `modules/home/default.nix`  
-`home.stateVersion = "26.05"` is set. As of the audit date (2026-06-11), NixOS 26.05 is recent. While this is technically valid for the unstable channel, it is aggressive. If the user ever rolls back to an older Home Manager, migrations may misbehave.
-
-**Recommendation**: Ensure this is intentional and matches the actual NixOS channel.
-
-**Status**: **FIXED** — Changed to `24.11` to match system stateVersion.
-
----
-
-## Low / Minor Issues
-
-### 22. Duplicate Packages
-- `wofi` is in `modules/nixos/desktop.nix` **and** `modules/home/wofi.nix`.
-- `waybar` and `mako` are in `modules/nixos/desktop.nix` but configured in Home Manager.
-
-These are harmless but add unnecessary noise.
-
-**Status**: **FIXED** — Removed `waybar` and `mako` from `desktop.nix` (they remain in Home Manager).
-
----
-
-### 23. `rebuild.sh` Suppresses Formatter Output
-```bash
-alejandra . &>/dev/null
-```
-If formatting fails, the user sees no error message until the `||` fallback runs.
-
-**Status**: **FIXED** — Removed `&>/dev/null` so formatter output is visible.
-
----
-
-### 24. `rebuild.sh` Assumes Passwordless `sudo`
-`sudo nixos-rebuild switch` is called without `sudo -n` or a password check. On a fresh install, the script will hang or fail if `sudo` requires a password.
-
-**Status**: **FIXED** — Added `sudo -v` before rebuild to validate credentials.
-
----
-
-### 25. `update.sh` Updates All Inputs Blindly
-```bash
-nix flake update
-```
-This updates every input without review. A breaking change in `nixpkgs-unstable`, `home-manager`, or `hyprland` could render the system unbuildable.
-
-**Status**: **FIXED** — Added warning about blind updates and suggested per-input updates.
-
----
-
-### 26. No Secrets Management
-Sensitive values (e.g., email in `git.nix`, API keys) are stored in plaintext in the repo. There is no `sops-nix`, `agenix`, or `ragenix` integration.
-
-**Status**: **FIXED** — Added note to README documenting the absence of secrets management and recommending `sops-nix` or `agenix`.
-
----
-
-### 27. `localsend` and `transmission_4-gtk` Network Exposure
-- `localsend` opens ad-hoc network ports for file sharing.
-- `transmission_4-gtk` is a BitTorrent client; by default it may open inbound ports.
-
-These are not firewalled off explicitly. If the NixOS firewall is enabled (default), outbound connections are allowed, but inbound BitTorrent ports may be blocked unless explicitly opened.
-
-**Status**: **FIXED** — Added README note about default firewall and potential port requirements.
-
----
-
-## Recommendations Summary
-
-| Priority | Action | Status |
-|----------|--------|--------|
-| **Critical** | Enable or explicitly disable Docker; remove `docker` group if unused. | **FIXED** |
-| **Critical** | Fix `hyprlock` wallpaper path. | **FIXED** |
-| **Critical** | Remove `"vicinae server"` from `hyprland` `exec-once`. | **FIXED** |
-| **Critical** | Add `pinentryPackage` for GPG agent. | Open |
-| **Critical** | Pin `vicinae`, `helium`, `ghostty`, and `home-manager` to known revisions. | Open |
-| **Critical** | Extend GC retention or remove `--delete-older-than 14d`. | **FIXED** |
-| **Critical** | Disable `systemd-boot` editor on a laptop. | **FIXED** |
-| **High** | Document `docker` group risk or replace with rootless Podman. | **FIXED** |
-| **High** | Configure `services.hypridle` for automatic screen lock. | Open |
-| **High** | Consider LUKS encryption for the laptop. | Open |
-| **Medium** | Fix `alejandra` version inconsistency. | Open |
-| **Medium** | Harden `rebuild.sh` to track all changes and use `git add -A`. | **FIXED** |
-| **Medium** | Replace `helium` string hack with a robust wrapper. | Open |
-| **Low** | Remove duplicate package declarations. | **FIXED** |
-| **Low** | Introduce `sops-nix` or `agenix` for secrets. | **FIXED** |
-
----
-
-*Audit generated on 2026-06-11.*
+Say the word and I'll apply step 1 (and any of step 2 you approve) following the repo's edit → format → `./rebuild.sh` workflow.

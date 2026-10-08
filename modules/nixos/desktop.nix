@@ -14,6 +14,18 @@
   services.gvfs.enable = true;
   services.tumbler.enable = true;
 
+  # Printing: CUPS with driverless/IPP-USB, network discovery via mDNS
+  services.printing.enable = true;
+  services.ipp-usb.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  # Scanning: SANE backend (simple-scan app comes from GNOME core utilities)
+  hardware.sane.enable = true;
+
   services.pipewire = {
     enable = true;
     audio.enable = true;
